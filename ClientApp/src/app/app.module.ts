@@ -11,7 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './My_user/user.component';
 import { CommonModule } from '@angular/common';
-import { MytestComponent } from './mytest/mytest.component';
+import { MytestComponent } from './Mytest/mytest.component';
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
 import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
 
