@@ -1,16 +1,9 @@
-{ /* 可參考此文件
-  https://www.cnblogs.com/nullcc/p/5829218.html
-  此檔案主要此專案所使用到的第三方依賴包的引用設定....
-  加入後...再透過npm install 進行安裝
-  */
-  //插件的名字，应全部小写，不能有空格
+{ 
+  
   "name": "learn",
-  "version": "0.0.0", //的版本
-  /*
-  scripts字段是一个由脚本命令组成的字典，这些命令运行在包的各个生命周期中。
-  这里的键是生命周期事件名，值是要运行的命令。可以参考npm-scripts获取配置scripts的更多信息。
-  */
-  "scripts": { // 同 npm scripts
+  "version": "0.0.0", 
+
+  "scripts": { 
     "ng": "ng",
     "start": "ng serve --no-progress",
     "build": "ng build",
@@ -19,18 +12,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  /*
-  如果你在包的package.json中设置"private": true，则npm会拒绝发布它。
-  这是防止私有包被以外发布的一种方法。
-  如果你希望包装某个包只能被发布到特定的一个registry中(比如，一个内部的registry)，
-  则可以使用下面的publishConfig字典来描述以在publish-time重写registry配置参数。
-  */
+  
   "private": true,
-  /*
-  dependencies字段是一个对象，它指定了依赖的包名和其版本范围的映射。
-  版本范围是个有一个或多个空白分隔描述符的字符串。dependencies字段还可以用tarball或者git URL。
-  */
-  "dependencies": { //依赖
+  
+  "dependencies": { 
     "@angular/animations": "8.2.0",
     "@angular/cdk": "~8.1.2",
     "@angular/common": "8.2.0",
@@ -50,13 +35,7 @@
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
-  /*
-  開發依赖
-  如果有人计划在他们的项目中下载和使用你的模块，但他们可能并不想或并不需要你开发所使用的外部测试和文档框架。
-  在这种情况下，最好将这些附加的项放在devDependencies中。
-  这些项将会在根目录下执行npm link或npm install时被安装，
-  并且可以像其他npm配置参数一样被管理。可以参考npm-config获得更多信息。
-  */
+  
   "devDependencies": { 
     "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~8.2.0",
@@ -76,22 +55,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "typescript": "~3.5.3"
   },
-  /*
-  peerDependencies
-  在某些情况下，当一个主机无法require依赖包时，你会想要告诉它还有哪些工具或库与这个依赖包兼容。
-  这通常被成为一个插件。尤其是在host文档中声明的模块会暴露一个特定的接口。
-  
-  bundledDependencies
-  在发布包时，包名的数组会被打包进去。
-  如果拼写成"bundleDependencies"(少个d)，也是可以的。
-
-  optionalDependencies
-  如果一个依赖项可用，但希望在这个依赖项无法被找到或者安装时失败npm还能继续处理(不中断)，
-  那么你可以把它放在optionalDependencies中。和dependencies一样，
-  optionalDependencies是一个包名和版本号或url的映射。
-  区别在于optionalDependencies中的依赖构建失败时不会导致npm整体安装失败。
-
-  */
+ 
   "optionalDependencies": {
     "node-sass": "^4.13.1",
     "protractor": "~5.4.0",
