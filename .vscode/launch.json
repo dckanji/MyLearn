@@ -1,5 +1,7 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
+   // 整體系統啟動作業以及 附加的session作業..(執行編譯後的文件) 
+   // 設定部屬到iis的文件
+   //Use IntelliSense to find out which attributes exist for C# debugging
    // Use hover for the description of the existing attributes
    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
    "version": "0.2.0",
