@@ -1,4 +1,4 @@
-/**
+/**11
  * Angular 組件 (Components)
  * 每个 Angular 应用都至少有一个组件，也就是根组件(如 AppComponent )，它会把组件树和页面中的 DOM 连接起来。
  * 每个组件都会定义一个类，其中包含应用的数据和逻辑，并与一个 HTML 模板相关联，
@@ -11,7 +11,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 /**@Component() 装饰器表明紧随它的那个类是一个组件，并提供模板和该组件专属的元数据。 
- * 装饰器是一些用于修饰 JavaScript 类的函数。
+ * 装饰器是一些用于修饰 JavaScript 类的函数。  
  * Angular 定义了许多装饰器， 这些装饰器会把一些特定种类的元数据附加到类上，
  * 以便 Angular 了解这些这些类的含义以及该如何使用它们。
  * 
