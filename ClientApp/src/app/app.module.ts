@@ -18,11 +18,13 @@ import { CounterComponent } from './counter/counter.component'; /**計數器組�
 import { FetchDataComponent } from './fetch-data/fetch-data.component';/**提取数据組件 */
 import { NavMenuComponent } from './nav-menu/nav-menu.component';/**实现侧栏导航。 包含NavLink 组件 */
 
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './My_user/user.component';
-import { MytestComponent } from './Mytest/mytest.component';
+import { HomeComponent } from './home/home.component'; /** 系統初始 組件 hello world */
+import { UserComponent } from './My_user/user.component'; /** 測試組件-user 帳號..*/
+import { MytestComponent } from './Mytest/mytest.component';/**測試組件-任意測試.. */
+/** 測試子母組件 */
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
 import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
+
 
 /*
  @NgModule 装饰器将AppModule 标记为 Angular 模块类（也叫 NgModule 类）。 
