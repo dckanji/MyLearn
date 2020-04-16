@@ -17,9 +17,9 @@ import { Template } from '@angular/compiler/src/render3/r3_ast';
  * 
 */
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-root', /*使用这个组件的名称 html中應用如同 <app-root></app-root>*/ 
+  templateUrl: './app.component.html', /* html 模板的位置- 可用 template 属性的值来提供内联的 HTML 模板*/
+  styleUrls: ['./app.component.css'] /*css 样式*/ 
 })
 
 /**
