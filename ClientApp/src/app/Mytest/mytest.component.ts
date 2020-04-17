@@ -17,6 +17,11 @@ export class MytestComponent implements OnInit { /*实现接口*/
 
   constructor() { } /*构造函数*/
 
+  /**服务类的范例，用于把日志记录到 浏览器的控制台(如 chrome: f12 -> consle) */
+  log(msg:any){console.log(msg);}
+  error(msg: any) { console.error(msg); }
+  warn(msg: any)  { console.warn(msg); }
+
   ngOnInit() { /*初始化加载的生命周期函数*/
   }
 
