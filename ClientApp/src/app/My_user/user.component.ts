@@ -41,11 +41,12 @@ export class User {
 })
 export class UserComponent {
 
-  //第一種方式...直接賦值..宣告user物件陣列..並直接填入資料
+  //第一種方式...直接賦值..宣告user物件陣列..並直接填入資料...
+  //測試時可註解第二種方式
   users: User[] = [
-    { id: 1, name: 'BBBBB', age: 18, date: new Date() },
-    { id: 2, name: 'gggg', age: 18, date: new Date() },
-    { id: 3, name: 'eeeee', age: 25, date: new Date() },
+    { id: 1, name: 'AAAAAA', age: 18, date: new Date() },
+    { id: 2, name: 'BBBBBB', age: 19, date: new Date() },
+    { id: 3, name: 'CCCCCC', age: 23, date: new Date() },
   ];
   
   //第二種方式....建構user物件時...由api服務傳回資料..以user類別進行承接
@@ -59,13 +60,16 @@ export class UserComponent {
      * C#的Lambda 表达式都使用 Lambda 运算符 =>，该运算符读为“goes to"
      * => 运算符具有与赋值运算符 (=) 相同的优先级，并且是右结合运算符
      * Lambda表达式 : subscribe(data => {this.users = data; }) =>  function(date){this.users = data;}
-     * 意思是抓取到 物件值(data) 逐一寫入到 this.users中
+     * 
+     * this.http.get<User[]>('/api/users/get-user') 傳回一個User[]的陣列
+     * 然後再透過 subscribe監聽返回方式, 將從UsersController端得到 users陣列物件傳入參數data , 
+     * 再透過  this.users = data 寫入到本地的this.users物件中
+     * 
      * */
     this.http.get<User[]>('/api/users/get-user').subscribe(data => {
                                                             this.users = data;
                                                                   }
                                                           );
-
 
 
   }
