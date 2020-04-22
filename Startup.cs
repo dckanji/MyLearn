@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using System;
+
 namespace learn
 {
     public class Startup
@@ -65,6 +67,9 @@ namespace learn
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
+                
+                //将超时配置为5分钟，以避免“ Angular CLI进程未在50秒的超时时间内开始监听请求”。
+                spa.Options.StartupTimeout = new TimeSpan(0,5,0); //5分鐘
 
                 if (env.IsDevelopment())
                 {
