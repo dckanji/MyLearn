@@ -68,11 +68,13 @@ namespace learn
 
                 spa.Options.SourcePath = "ClientApp";
                 
-                //将超时配置为5分钟，以避免“ Angular CLI进程未在50秒的超时时间内开始监听请求”。
-                spa.Options.StartupTimeout = new TimeSpan(0,5,0); //5分鐘
+                
 
                 if (env.IsDevelopment())
                 {
+                    //将超时配置为1分30秒，以避免“ Angular CLI进程未在50秒的超时时间内开始监听请求”。
+                    spa.Options.StartupTimeout = new TimeSpan(0,1,30); //1分30秒
+
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
