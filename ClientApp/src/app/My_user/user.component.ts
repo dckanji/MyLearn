@@ -17,6 +17,8 @@ export class User {
    * 设置组件的内联模板...可建立在檔案(如:user.component,ts)或直接寫在程式中
    * templateUrl: './app.component.html'
    * *ng為Angular的前端邏輯判斷語法
+   * 内联 (inline)模板是包在 ECMAScript 2015 反引号 (`) 中的一个多行字符串。 
+   * 反引号 (`) — 注意，不是单引号 (') — 允许把一个字符串写在多行上， 使 HTML 模板更容易阅读
    */
 
   template: `
