@@ -35,7 +35,6 @@ namespace learn.Controllers
             // 存取後端服務 Service 
             //this.service.GetUser();
             Console.WriteLine("TestEF1*********");
-            //string str = "EF USER ...ok";
 
             //回傳字串陣列
             var str = new String[]
@@ -43,13 +42,13 @@ namespace learn.Controllers
                     "xxxxx",
                     "ooooo"
                 };
-            //var teststr = new String("xxx");
+            
             return Ok(str);
-        }//end getuser
+        }//end TestEF1
 
 
         /*
-        MVC中ActionResult是Action的返回结果
+        回傳字串格式
         */
         [HttpGet("TestEF2")]
         public ActionResult TestEF2()
@@ -57,14 +56,24 @@ namespace learn.Controllers
             // 存取後端服務 Service 
             //this.service.GetUser();
             Console.WriteLine("TestEF2***********");
-            //string str = "EF USER ...ok";
 
             //回傳字串陣列
-            var str ="ok";//new String("xxxxx");
-
-            //var teststr = new String("xxx");
+            var str ="TestEF2 OK";//new String("xxxxx");
             return Ok(str);
-        }//end getuser
+        }//end TestEF2
+
+        /*
+        回傳JSON格式物件
+        */
+        [HttpGet("TestEF3")]
+        public ActionResult TestEF3()
+        {
+
+            //回傳字串陣列
+            var str ="TestEF3 OK";//new String("xxxxx");
+            return Json(str); //或前端呼叫未轉換成{'responseType':'text'} 則需要傳回json格式
+
+        }//end TestEF3
 
 
     }//end  UsersController

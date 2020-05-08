@@ -20,28 +20,21 @@ export class User {
   export class EftestComponent implements OnInit { /*实现接口*/  
         //构造函数-載入通用服務  
         constructor(private http: HttpClient, private toolService: ToolService) { 
-          var test = this.http.get<any>('/api/EFUser/TestEF2');
-          console.log("test:"+test.subscribe.toString()); 
         } 
         
-        testEFStatus: string[];
-        
+        users: User[] = [
+          { id: 1, name: 'AAAAAA', age: 18, date: new Date() },
+          { id: 2, name: 'BBBBBB', age: 19, date: new Date() },
+          { id: 3, name: 'CCCCCC', age: 23, date: new Date() },
+        ];
+
+        testEFStatus: string = 'START';
+        callType: string = '3';//測試項目
+
         ngOnInit() { /*初始化加载的生命周期函数*/
-        
-          
-            
         }
+
     /**
-     * 透過 Microsoft.AspNetCore.Mvc.RouteAttribute 的機制 取得 已經註冊的控制元件標籤 
-     * /api/users/get-user...(該內容建立在UsersController.cs) 取得user物件類
-     * subscribe 侦听http请求的返回，页面间传递参数..subscribe是Observable类下的一个函数
-     * Observable的作用是可以起到类似监听的作用，但它的监听往往都是在跨页面中
-     * 
-     * C#的Lambda 表达式都使用 Lambda 运算符 =>，该运算符读为“goes to"
-     * => 运算符具有与赋值运算符 (=) 相同的优先级，并且是右结合运算符
-     * Lambda表达式 : subscribe(data => {this.users = data; }) =>  function(date){this.users = data;}
-     * 
-     * this.http.get<User[]>('/api/users/get-user') 傳回一個User[]的陣列
      * 然後再透過 subscribe監聽返回方式, 將從UsersController端得到 users陣列物件傳入參數data , 
      * 再透過  this.users = data 寫入到本地的this.users物件中
      * 
@@ -54,11 +47,34 @@ export class User {
          * subscribe方法是对get接收的数据进行处理。参数 res 就是接收过来的数据对象。然后把 res 对象赋值给anyList变量。
          */
         CallEF(): void {
-            //this.toolService.log('EF TEST.......'); 
-            //  
-            // this.http.get<any>('/api/EFUser/TestEF2', { observe: 'response' })
+              
+              if (this.callType =='1'){
+                //若傳回為物件類-傳回一個User[]的陣列
+                this.http.get<User[]>('/api/EFUser/TestEF1').subscribe( data=>{
+                  this.users = data;
+                  this.testEFStatus = "USER";
+                  }
+                );
+              }
+              else if (this.callType == '2'){
+                //若傳回為字串則需要轉換responsetype = text 格式接收
+                this.http.get('/api/EFUser/TestEF2',{'responseType':'text'}).subscribe( data=>{
+                  this.testEFStatus = data;
+                  }
+                );
+              }
+              else if(this.callType =='3'){
+                //若傳回為json格式或物件類則使用此方式..any可代入相應類別.
+                this.http.get<any>('/api/EFUser/TestEF3').subscribe( data=>{
+                  this.testEFStatus = data;
+                  }
+                );
+              }
+              console.log(this.testEFStatus);
+              this.toolService.log('TEST:'+this.testEFStatus); 
 
-           /* this.http.get<any>('/api/EFUser/TestEF1', { observe: 'response' }).subscribe(data => {
+           /* 傳回RESPONSE 中的資訊
+           this.http.get<any>('/api/EFUser/TestEF1', { observe: 'response' }).subscribe(data => {
               let response: HttpResponse<any> = data;
               let status: number = data.status;
               let statusText: string = data.statusText;
@@ -67,10 +83,6 @@ export class User {
                 //this.testEFStatus = data;
                  }
               );*/
-
-              this.http.get<any>('/api/EFUser/TestEF2').subscribe(
-                );
-            //this.toolService.log('testef:'+this.testEFStatus); 
 
         }
     }
