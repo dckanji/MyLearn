@@ -23,6 +23,10 @@ export class MytestComponent implements OnInit { /*实现接口*/
   warn(msg: any)  { console.warn(msg); }
 
   ngOnInit() { /*初始化加载的生命周期函数*/
+    
   }
+
+
+
 
 }

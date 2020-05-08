@@ -31,13 +31,19 @@ import { CommonModule } from '@angular/common'; /** 常見模塊*/
 import { AppComponent } from './app.component'; /*根组件*/
 
 //以下為自訂的模組組件..此處必須大小寫一致,否則會有異常
+//EftestComponent 組件名稱必須和export的組件名稱一致..否則會有異常
 import { CounterComponent } from './counter/counter.component'; /**計數器組件*/
 import { FetchDataComponent } from './fetch-data/fetch-data.component';/**提取数据組件 */
 import { NavMenuComponent } from './nav-menu/nav-menu.component';/**实现侧栏导航。 包含NavLink 组件 */
 
+import { MytestComponent } from './Mytest/mytest.component';/**測試組件-主要測試入口.. */
+
 import { HomeComponent } from './home/home.component'; /** 系統初始 組件 hello world */
 import { UserComponent } from './My_user/user.component'; /** 測試組件-user 帳號..*/
-import { MytestComponent } from './Mytest/mytest.component';/**測試組件-任意測試.. */
+
+import { EftestComponent } from './MyEFTest/eftest.component';/**測試組件-EF框架.. */
+import { MessagesComponent }    from './messages/messages.component';/**訊息組件 */
+
 /** 測試子母組件 */
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
 import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
@@ -68,7 +74,9 @@ import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
     UserComponent,
     MytestComponent,
     MyDemoChildComponent,
-    MyDemoParentComponent
+    MyDemoParentComponent,
+    EftestComponent,
+    MessagesComponent
   ],
   //exports, /* 設定能在其他模塊 使用*/
   imports: [ /*引入本模块运行依赖的其他模块*/

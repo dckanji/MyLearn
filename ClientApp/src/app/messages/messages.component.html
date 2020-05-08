@@ -1,0 +1,8 @@
+<!--若訊息有資料才會顯示-->
+<div *ngIf="messageService.messages.length">
+
+  <button class="clear"
+          (click)="messageService.clear()">clear</button><!-- 呼叫 messageService的clear() 方法-->
+  <div *ngFor='let message of messageService.messages'> {{message}} </div><!-- 列出訊息內容-->
+
+</div>

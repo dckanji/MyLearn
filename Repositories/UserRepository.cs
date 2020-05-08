@@ -10,6 +10,8 @@ namespace learn.Repositories
         internal DataTable GetUsers()
         {
             var connStr = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.26.1.161)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=PDISDBPDB)));User Id=PDIS_STD;Password=PDIS_STD;";
+            //var myorcl = "User Id=MYTEST;Password=MYTEST;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=MYORCL11)));";
+            
             using (var conn = new OracleConnection(connStr))
             {
                 conn.Open();
@@ -21,5 +23,32 @@ namespace learn.Repositories
                 return dt;
             }
         }
+
+        public void SetUsers(){
+/*
+            Database.SetInitializer(new DropCreateDatabaseAlways<OracleDbContext>());
+22 
+23             using (var ctx = new OracleDbContext())
+24             {
+25                 var emp = new Employee
+26                 {
+27                     Name = "Tom",
+28                     HireDate = DateTime.Now
+29                 };
+30 
+31                 ctx.Employees.Add(emp);
+32                 ctx.SaveChanges();
+33 
+34                 var dept = new Department
+35                 {
+36                     Name = "Accounting",
+37                     ManagerId = emp.EmployeeId
+38                 };
+39 
+40                 ctx.Departments.Add(dept);
+41                 ctx.SaveChanges();
+*/
+        }
+        
     }
 }
