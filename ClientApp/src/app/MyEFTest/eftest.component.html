@@ -1,26 +1,10 @@
 
-<table border="1">
-    <tr>
-            <th><h2>EF 測試</h2></th>
-            <th><h2>MESSAGE</h2></th>
-     </tr>                    
-    <tr>
-      <th>
-        <div>
-            <label>測試:
-            <input #heroName />
-            </label>
-            <!-- (click) passes input value to add() and then clears the input -->
-            <button (click)="CallEF()">
-            TEST EF
-            </button>
-        </div>
-      </th>
-      <th>
-            <app-messages></app-messages>
-      </th>
-
-    </tr>
-    
-  </table>
-
+<div>
+  <label>EF測試:
+  <input #testType placeholder="請輸入測試序號" />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="CallWebApi(testType.value)" >
+  TEST EF
+  </button>
+</div>

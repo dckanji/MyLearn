@@ -40,7 +40,9 @@ export class User {
       </tr>
     </table>
   `
-})
+}) //end @Component
+
+
 export class UserComponent {
 
   //第一種方式...直接賦值..宣告user物件陣列..並直接填入資料...
@@ -51,6 +53,7 @@ export class UserComponent {
     { id: 3, name: 'CCCCCC', age: 23, date: new Date() },
   ];
   
+
   //第二種方式....建構user物件時...由api服務傳回資料..以user類別進行承接
   constructor(private http: HttpClient) {
     /**
@@ -66,14 +69,14 @@ export class UserComponent {
      * this.http.get<User[]>('/api/users/get-user') 傳回一個User[]的陣列
      * 然後再透過 subscribe監聽返回方式, 將從UsersController端得到 users陣列物件傳入參數data , 
      * 再透過  this.users = data 寫入到本地的this.users物件中
+     * 只適合初次載入 或初始化 時使用
      * 
      * */
     this.http.get<User[]>('/api/users/get-user').subscribe(data => {
                                                             this.users = data;
                                                                   }
                                                           );
+  }//end constructor
 
 
-  }
-  
 }
