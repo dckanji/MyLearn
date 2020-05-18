@@ -13,13 +13,12 @@ namespace learn.Controllers
     public class EFUsersController : Controller
     {
         /**
-        第一種 資料庫模式 - 使用 UserService 呼叫後端 service 服務提供者
+        資料庫模式 - 使用 UserService 呼叫後端 service 服務提供者
         */
-        private readonly UserService service; //建立 service 服務提供者 物件
-
+        private readonly EFUserService service; //建立 service 服務提供者 物件
 
         /*建構子*/
-        public EFUsersController(UserService service)
+        public EFUsersController(EFUserService service)
         {
             this.service = service;
         }
@@ -48,7 +47,7 @@ namespace learn.Controllers
         如: http.get('/api/EFUser/TestEF2',{'responseType':'text'})
         */
         [HttpGet("Test2")]
-        public ActionResult Test2()
+        public ActionResult TestTEST2() //實際FUNCTION名稱可以不同
         {
             Console.WriteLine("Test2***********");
             //回傳字串陣列
@@ -70,14 +69,18 @@ namespace learn.Controllers
         }//end Test3
 
         /*
-        測試呼叫 後端 EF 服務
+        測試呼叫 後端 EF 服務...在SCHEMA下建立TABLE
         */
         [HttpGet("EF1")]
         public ActionResult EF1()
         {
             Console.WriteLine("EF1***********");
+            //設定使用者
+            this.service.Test1();
+            var str = "OK";
+            //DataTable users = this.service.GetUser();
+
             //回傳字串陣列
-            var str ="EF1 OK";
             return Json(str); 
 
         }//end Test3

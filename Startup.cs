@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using learn.EFDB;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace learn
 {
@@ -31,9 +32,19 @@ namespace learn
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            //使用UserSecrets設定連接字串
+            //services.AddTransient<TestSecretRepository>();
+            services.AddDbContext<TestSecretDbContext>(options => 
+                options.UseOracle(Configuration.GetConnectionString("MyTestSecretConnection"))
+            );
+            
 
+            //增加後端的服務需要在此處設定..否則會出現找不到後端服務的異常
             services.AddScoped<UserRepository>();
             services.AddScoped<UserService>();
+            services.AddScoped<EFUserService>();
+            services.AddScoped<EFUserRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

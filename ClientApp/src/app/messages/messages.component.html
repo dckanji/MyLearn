@@ -1,8 +1,41 @@
 <!--若訊息有資料才會顯示-->
 <div *ngIf="messageService.messages.length">
-
   <button class="clear"
           (click)="messageService.clear()">clear</button><!-- 呼叫 messageService的clear() 方法-->
-  <div *ngFor='let message of messageService.messages'> {{message}} </div><!-- 列出訊息內容-->
+  <!--判斷區塊-->        
+  <div *ngIf="mesType==msg; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+      <div *ngFor='let message of messageService.messages'> {{message}} </div><!-- 列出訊息內容-->
+    </ng-template>
+    <ng-template #elseBlock>
+      資料集-未設計
+    </ng-template>
+          
+</div>
+<!--
+<div *ngIf="mesType==msg; then thenBlock else elseBlock">
+  <ng-template #thenBlock>
+    <div *ngIf="messageService.messages.length">
+      <button class="clear"
+              (click)="messageService.clear()">clear</button>
+      <div *ngFor='let message of messageService.messages'> {{message}} </div>
+    </div>
+  </ng-template>
+  <ng-template #elseBlock>
+    資料集
+  </ng-template>
 
 </div>
+-->
+
+<!--  </tr>
+
+  <tr>
+  <th>
+    <div *ngIf="isMsgType=data; then thenBlock else elseBlock">
+      <ng-template #thenBlock><app-users></app-users></ng-template>
+      <ng-template #elseBlock><app-messages></app-messages></ng-template>
+    </div>
+  </th>
+
+  -->

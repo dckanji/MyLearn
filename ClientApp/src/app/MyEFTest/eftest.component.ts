@@ -22,8 +22,10 @@ export class User {
 
   export class EftestComponent implements OnInit { /*实现接口*/  
        
-      msgDesc: string = 'START';; //顯示訊息
-      callType: string;//測試項目
+      msgDesc: string = 'START'; //顯示訊息
+
+      isMsgType: string;//載入msg類型
+
       users: User[] = [ //宣告一個user類的物件陣列
         { id: 1, name: 'AAAAAA', age: 18, date: new Date() },
         { id: 2, name: 'BBBBBB', age: 19, date: new Date() },
@@ -75,6 +77,7 @@ export class User {
               this.http.get<User[]>('/api/EFUser/Test1').subscribe( data=>{
                 this.users = data;
                 this.msgDesc ="陣列數-"+this.users.length.toString();
+                //this.isMsgType = 'data';
                 /** 注意: 若此處輸出放http之外則會先執行..http回應完成才會執行此處
                  * 可試試放外層..會產生延遲設定顯示的效果
                  */

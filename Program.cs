@@ -12,13 +12,14 @@ namespace learn
 {
     public class Program
     {
+        //專案執行入口
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args) //預先設定的預設值來初始化主機的新實例
                 .UseStartup<Startup>();
     }
 }
