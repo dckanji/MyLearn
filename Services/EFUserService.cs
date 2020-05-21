@@ -16,6 +16,8 @@ namespace learn.Services
         {
             this.repo = repo;
         }
+
+
         /**
         使用EF進行存取
         */
@@ -25,24 +27,29 @@ namespace learn.Services
             //return "test";
         }
 
+
         /**
-        使用EF TEST
+        使用EF TEST1
         */
-        internal void Test1()
+        internal string Test1()
         {
-            //this.repo.EFTest1();
-            this.repo.TestSecret();
+            return this.repo.EFTest1();
+            //this.repo.TestSecret();
+            //return "test";
+        }
+
+        /**
+        使用EF TEST2
+        */
+        internal string Test2()
+        {
+            return this.repo.EFTest2();
+            //this.repo.TestSecret();
             //return "test";
         }
 
 
-        //internal关键字是类型和类型成员的访问修饰符。只有在同一个程序集的文件中，内部类型或者是成员才可以访问
-        //透過repo獲取資料
-       /* internal DataTable GetUser()
-        {
-            return this.repo.GetUsers();
-        }
-*/
+
 
     }
 }

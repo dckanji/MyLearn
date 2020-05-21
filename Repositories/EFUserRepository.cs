@@ -54,8 +54,9 @@ namespace learn.Repositories
         */
         internal DataTable GetUsersByContext()
         {
-           
-            using (var conn = new MylearnDbContext().GetDbConnection())
+            MylearnDbContext mydb = new MylearnDbContext();
+
+            using (var conn = mydb.GetDbConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
@@ -87,12 +88,23 @@ namespace learn.Repositories
             
         }
 
+        /**
+        使用EF進行存取
+        */
+        public string SetEFUsers(){
+
+            return "REP SetEFUser OK";
+        }
+
+
+//******************************* TEST SPACE START ************************
 
         public string EFTest1(){
             
             Console.WriteLine("REP EFTest1-1*******************************************");
             
-           
+            MylearnDbContext mydb = new MylearnDbContext();
+            Console.WriteLine("mydb class:"+mydb);
 
             /*MylearnDbContext _context = new MylearnDbContext();
             
@@ -118,32 +130,17 @@ namespace learn.Repositories
             return "EFTEST1 OK";
         }
 
-        public string TestSecret(){
+        public string EFTest2(){
             
-            Console.WriteLine("TestSecret START *******************************************");
-            using (var conn = _context.GetDbConnection())
-            {
-                conn.Open();
-                var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM STD_USER"; //直接sql語法
-                var reader = cmd.ExecuteReader();
-                var dt = new DataTable();
-                dt.Load(reader);
-                Console.WriteLine("DB COUNT-"+dt.Rows.Count);
-                //return dt;
-            }
-            Console.WriteLine("TestSecret END*******************************************");
-            return "EFTEST1 OK";
+            Console.WriteLine("Test2 START *******************************************");
+        
+            Console.WriteLine("Test2 END*******************************************");
+            return "EFTEST2 OK";
         }
 
+//******************************* TEST SPACE END ************************
 
-        /**
-        使用EF進行存取
-        */
-        public string SetEFUsers(){
 
-                       return "REP SetEFUser OK";
-        }
 /*
             Database.SetInitializer(new DropCreateDatabaseAlways<OracleDbContext>());
 22 

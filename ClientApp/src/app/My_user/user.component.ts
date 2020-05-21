@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 //使用者類別
 export class User {
@@ -43,7 +46,7 @@ export class User {
 }) //end @Component
 
 
-export class UserComponent {
+export class UserComponent implements OnInit{
 
   //第一種方式...直接賦值..宣告user物件陣列..並直接填入資料...
   //測試時可註解第二種方式
@@ -53,9 +56,23 @@ export class UserComponent {
     { id: 3, name: 'CCCCCC', age: 23, date: new Date() },
   ];
   
+  /**
+ * 透過 路由快照 中取得 id參數....參數一般常為字串
+ * route.snapshot 是一个路由信息的静态快照，抓取自组件刚刚创建完毕之后
+ * paramMap 是一个从 URL 中提取的路由参数值的字典。 "id" 对应的值就是要获取的 id
+ */
+
+
+  runtype:string ;
 
   //第二種方式....建構user物件時...由api服務傳回資料..以user類別進行承接
-  constructor(private http: HttpClient) {
+  constructor(
+    private route: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
+    private http: HttpClient) {
+    
+     
+      
+
     /**
      * 透過 Microsoft.AspNetCore.Mvc.RouteAttribute 的機制 取得 已經註冊的控制元件標籤 
      * /api/users/get-user...(該內容建立在UsersController.cs) 取得user物件類
@@ -72,11 +89,48 @@ export class UserComponent {
      * 只適合初次載入 或初始化 時使用
      * 
      * */
-    this.http.get<User[]>('/api/users/get-user').subscribe(data => {
-                                                            this.users = data;
-                                                                  }
-                                                          );
+    if (this.runtype == "2") {
+      this.http.get<User[]>('/api/users/get-userdb').subscribe(data => {
+        this.users = data;
+              }
+      );
+    }
+    else{
+      this.http.get<User[]>('/api/users/get-userarray').subscribe(data => {
+        this.users = data;
+              }
+      );
+    }
+    
+    
+    
   }//end constructor
+
+  //初始化
+  ngOnInit(): void {
+    
+    this.getUser();
+  }
+  
+  public id;
+
+  getUser(): void {
+    
+    console.log('runtype-'+this.route.snapshot.paramMap.get('id'));
+
+
+
+    this.route.params.subscribe(
+      data => {
+        this.id = data;
+        console.log('id='+this.id);
+     }
+    )
+    
+      
+  }
+
+
 
 
 }

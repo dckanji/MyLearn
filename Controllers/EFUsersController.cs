@@ -68,6 +68,8 @@ namespace learn.Controllers
 
         }//end Test3
 
+
+
         /*
         測試呼叫 後端 EF 服務...在SCHEMA下建立TABLE
         */
@@ -83,8 +85,22 @@ namespace learn.Controllers
             //回傳字串陣列
             return Json(str); 
 
-        }//end Test3
+        }//end EFTest1
 
+
+        [HttpGet("EF2")]
+        public ActionResult EF2()
+        {
+            Console.WriteLine("EF2***********");
+            //設定使用者
+            this.service.Test2();
+            var str = "OK";
+            //DataTable users = this.service.GetUser();
+
+            //回傳字串陣列
+            return Json(str); 
+
+        }//end EFTest2
 
     }//end  UsersController
 

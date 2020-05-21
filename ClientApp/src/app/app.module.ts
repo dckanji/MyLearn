@@ -48,6 +48,8 @@ import { MessagesComponent }    from './messages/messages.component';/**訊息�
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
 import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
 
+//以下皆來自heroes 範例中的組件
+import { AppRoutingModule }     from './app-routing.module'; //路由組件
 
 /*
  Angular 应用是模块化的，它拥有自己的模块化系统，称作 NgModule
@@ -84,6 +86,8 @@ import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
     HttpClientModule,
     FormsModule,
     CommonModule,
+    // 引用路由模塊
+    AppRoutingModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
