@@ -77,13 +77,12 @@ namespace learn.Controllers
         public ActionResult EF1()
         {
             Console.WriteLine("EF1***********");
-            //設定使用者
-            this.service.Test1();
-            var str = "OK";
+            //回傳
+            var msg =this.service.EFTest1();
             //DataTable users = this.service.GetUser();
 
             //回傳字串陣列
-            return Json(str); 
+            return Json(msg); 
 
         }//end EFTest1
 
@@ -92,15 +91,17 @@ namespace learn.Controllers
         public ActionResult EF2()
         {
             Console.WriteLine("EF2***********");
-            //設定使用者
-            this.service.Test2();
-            var str = "OK";
+             //回傳
+            var msg =this.service.EFTest2();
             //DataTable users = this.service.GetUser();
 
             //回傳字串陣列
-            return Json(str); 
+            return Json(msg); 
 
         }//end EFTest2
+
+
+        
 
     }//end  UsersController
 

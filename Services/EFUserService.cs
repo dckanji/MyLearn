@@ -31,7 +31,7 @@ namespace learn.Services
         /**
         使用EF TEST1
         */
-        internal string Test1()
+        internal string EFTest1()
         {
             return this.repo.EFTest1();
             //this.repo.TestSecret();
@@ -41,7 +41,7 @@ namespace learn.Services
         /**
         使用EF TEST2
         */
-        internal string Test2()
+        internal string EFTest2()
         {
             return this.repo.EFTest2();
             //this.repo.TestSecret();

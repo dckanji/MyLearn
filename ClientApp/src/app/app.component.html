@@ -6,13 +6,13 @@ Hello World!<br>
             <th><h2>測試項目</h2></th>
             <th><h2>Message/資料集</h2></th>
     </tr>                    
+    <!-- 呼叫 來自control的webapi測試項目-->
     <tr>
-      <!-- EF 測試項目-->
       <th>
         <app-eftest></app-eftest>
       </th>
       <th>
-        <app-messages></app-messages>
+        <router-outlet name="eltestLet"></router-outlet>
       </th>
 
     </tr>
@@ -27,18 +27,27 @@ Hello World!<br>
 
     </tr>
 
-    <!-- User 測試項目-->
+    <!-- User 測試項目 -->
     <tr>
         <th>
-            引用 使用者(User) 組件
-            <nav>
-              <a routerLink="/myuser">物件陣列</a>
-              <a [routerLink]="['/myuser',2]">資料庫</a>
-            </nav>
+            引用 使用者(User) 組件與路由
+          <nav>
+              <a [routerLink]="['']">清空</a><br>
+              <!--a routerLink="/myuser/{{2}}">資料庫</a> 這樣的寫法容易有異常..不推薦-->
+              <!--<a [routerLink]="['/myuser', 2]"> 另一種寫法-->
+                <a [routerLink]="[{ outlets: { myuserLet: ['myuserary'] } }]">物件陣列</a><br>
+                <!-- outlet轉向的寫法-->
+              <a [routerLink]="[{ outlets: { myuserLet: ['myuser',2] } }]">資料庫</a>
+          </nav> 
         </th>
 
         <th>
-        <app-users></app-users>
+          <!--此處為路由route按下之後的輸出 
+           <router-outlet></router-outlet> 無任何命名的輸出...整個只能有一個
+           name可命名的輸出可多個
+          -->
+          <router-outlet name="myuserLet"></router-outlet>
+          
         </th>
     </tr>
     <!-- 組件交互 測試項目-->

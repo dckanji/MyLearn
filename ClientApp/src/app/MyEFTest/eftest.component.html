@@ -1,10 +1,16 @@
 
       <div>
-        <label>EF測試:
-        <input #testType placeholder="請輸入測試序號" />
-        </label>
-        <!-- (click) passes input value to add() and then clears the input -->
-        <button (click)="CallWebApi(testType.value)" >
-        TEST EF
-        </button>
+        <div>
+          <label>WebApi 測試:
+          <input #testType placeholder="請輸入測試序 1-4" />
+          </label>
+          <!-- (click) passes input value to add() and then clears the input -->
+          <button (click)="CallWebApi(testType.value)">Call WebApi</button>
+      </div>
+        <div>
+          <label>Call EF 測試:
+            <input #eftestType placeholder="請輸入測試序 1-2" />
+          </label>
+          <button (click)="CallEFWebApi(eftestType.value)">Call EFTest</button>
+        </div>
       </div>

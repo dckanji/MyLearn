@@ -43,6 +43,7 @@ import { UserComponent } from './My_user/user.component'; /** 測試組件-user 
 
 import { EftestComponent } from './MyEFTest/eftest.component';/**測試組件-EF框架.. */
 import { MessagesComponent }    from './messages/messages.component';/**訊息組件 */
+import { MyArrayComponent } from './MyArray/myarray.component';/**陣列組件.. */
 
 /** 測試子母組件 */
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
@@ -78,7 +79,8 @@ import { AppRoutingModule }     from './app-routing.module'; //路由組件
     MyDemoChildComponent,
     MyDemoParentComponent,
     EftestComponent,
-    MessagesComponent
+    MessagesComponent,
+    MyArrayComponent
   ],
   //exports, /* 設定能在其他模塊 使用*/
   imports: [ /*引入本模块运行依赖的其他模块*/
@@ -86,13 +88,16 @@ import { AppRoutingModule }     from './app-routing.module'; //路由組件
     HttpClientModule,
     FormsModule,
     CommonModule,
-    // 引用路由模塊
-    AppRoutingModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    ]),
+    /**路由配置的顺序很重要。 路由器会接受第一个匹配上导航所要求的路径的那个路由。
+    当所有路由都在同一个 AppRoutingModule 时，你要把默认路由和通配符路由放在最后（这里是在 /heroes 路由后面），
+    这样路由器才有机会匹配到 /heroes 路由，否则它就会先遇到并匹配上该通配符路由，并导航到“页面未找到”路由。
+    */
+    AppRoutingModule
   ],
   /**
    * 本模块向全局服务中贡献的那些服务的创建器。 这些服务能被本应用中的任何部分使用。

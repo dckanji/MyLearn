@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router,  ParamMap} from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 
 //使用者類別
@@ -63,15 +63,18 @@ export class UserComponent implements OnInit{
  */
 
 
-  runtype:string ;
+  myid:string ;
 
   //第二種方式....建構user物件時...由api服務傳回資料..以user類別進行承接
   constructor(
-    private route: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
+    private activerouter: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
+    private router: Router,
     private http: HttpClient) {
-    
-     
       
+      //獲取來自前端的參數
+      this.myid = this.activerouter.snapshot.paramMap.get('id');
+      //console.log('unavigate:'+this.myid);
+      //console.log('runtypecc-'+this.route.snapshot.paramMap.get('id'));
 
     /**
      * 透過 Microsoft.AspNetCore.Mvc.RouteAttribute 的機制 取得 已經註冊的控制元件標籤 
@@ -89,7 +92,7 @@ export class UserComponent implements OnInit{
      * 只適合初次載入 或初始化 時使用
      * 
      * */
-    if (this.runtype == "2") {
+    if (this.myid == "2") {
       this.http.get<User[]>('/api/users/get-userdb').subscribe(data => {
         this.users = data;
               }
@@ -103,27 +106,46 @@ export class UserComponent implements OnInit{
     }
     
     
-    
+   // this.router.navigate([{ outlets: { test: null }}]);
+
   }//end constructor
 
   //初始化
   ngOnInit(): void {
     
     this.getUser();
+    
+    //console.log('url:'+this.router.navigated);
+   /* console.log('unavigate:'+this.myid);
+   if (this.myid == null){
+      //初始化時轉向到outlet
+      this.router.navigate([{outlets: { myuserLet: ['myuserary',this.myid]}}]);
+    }
+*/
+
+  //初始化時轉向到outlet
+  //this.router.navigate([{outlets: { myuserLet: ['myuserary']}}]);
+
+    //清空outlet該轉向
+    //this.router.navigate([{outlets: { myuserLet: null}}]);
+
+    //含參數的轉向
+    //this.router.navigate(['/heroes', { id: heroId, foo: 'foo' }]);
+
   }
   
-  public id;
-
+  
+  //取值輸出
   getUser(): void {
-    
-    console.log('runtype-'+this.route.snapshot.paramMap.get('id'));
+    //從快照獲取參數
+    let id = this.activerouter.snapshot.paramMap.get('id');
+    console.log('client id-'+id);
 
 
 
-    this.route.params.subscribe(
+    this.activerouter.params.subscribe(
       data => {
-        this.id = data;
-        console.log('id='+this.id);
+        console.log('id='+data);
      }
     )
     

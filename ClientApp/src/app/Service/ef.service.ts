@@ -14,13 +14,14 @@ export class EfService {
   //这里的 base(api指的是虛擬服務器 web api) 是要请求的资源，而 collectionName(memheroes) 是 in-memory-data-service.ts 中的英雄数据对象
   private baseUrl = '/api/EFUser/';  // URL to web api
 
-  msgDesc: string = 'START';; //顯示訊息
-  callType: string = '4';//測試項目
-  users: User[] = [ //宣告一個user類的物件陣列
+  //msgDesc: string = 'START';; //顯示訊息
+  //callType: string = '4';//測試項目
+ /*users: User[] = [ //宣告一個user類的物件陣列
     { id: 1, name: 'AAAAAA', age: 18, date: new Date() },
     { id: 2, name: 'BBBBBB', age: 19, date: new Date() },
     { id: 3, name: 'CCCCCC', age: 23, date: new Date() },
   ];
+  */
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,7 +36,7 @@ export class EfService {
     
 
     /**
-     *  呼叫web api
+     *  呼叫 ef後端 controller web api
      */
     CallWebApi(testType: string): Observable<any> {
         console.log('srevice-'+testType);
