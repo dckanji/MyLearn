@@ -2,19 +2,13 @@ using System;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using learn.EFDB;
+using learn.Models;
 
-
+using System.Data.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using System.Data.Common;
-/*using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations.History;
-*/
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -101,10 +95,28 @@ namespace learn.Repositories
 
         public string EFTest1(){
             
-            Console.WriteLine("REP EFTest1-1*******************************************");
+            Console.WriteLine("REP EFTest1-測試寫入*******************************************");
             
+            //Database.SetInitializer(new DropCreateDatabaseAlways<OracleDbContext>());
+            
+            //建立資料庫連接物件
             MylearnDbContext mydb = new MylearnDbContext();
-            Console.WriteLine("mydb class:"+mydb);
+
+            using (var ctx = mydb)
+            {   
+                //要寫入的資料物件
+                var efuser = new EFUser{
+                    Id = 22,
+                    Name = "kkkk",
+                    Age = 20,
+                    CreationDate = DateTime.Now
+                };
+
+                ctx.EFUsers.Add(efuser);//新增資料
+                ctx.SaveChanges();//存檔COMMIT
+            }
+
+            Console.WriteLine("寫入ok");
 
             /*MylearnDbContext _context = new MylearnDbContext();
             

@@ -4,13 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace learn.Models
 {
-    [Table("EFUser")]
+    [Table("EFUSER")]
     public class EFUser
     {
-        [Key]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        //public int UserAge { get; set; }
+        [Column("USER_ID")]
+        public int Id { get; set; }
+
+        [Column("USER_NAME")]
+        public string Name { get; set; }
+
+        [Column("USER_AGE")]
+        public int Age { get; set; }
+
+        [Column("CREATION_DATE")]
         public DateTime CreationDate { get; set; }
         
     }

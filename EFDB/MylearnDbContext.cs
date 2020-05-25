@@ -49,6 +49,7 @@ namespace learn.EFDB
 
         /**
         覆寫資料庫實例..改變異動 資料庫屬性
+        在完成对派生上下文的模型(CONTEXT)的初始化后，并在该模型已锁定并用于初始化上下文之前，将调用此方法
         在上下文池（Context Pools）生成第一个实例时仅调用此方法一次， 然后将缓存该上下文（Context Pools）的模型，
         并且该模型适用于应用程序域中的上下文（Context Pools）的所有后续实例
         另外在做数据库迁移生成迁移文件的时候也会调用OnModelCreating方法
@@ -67,8 +68,6 @@ namespace learn.EFDB
             //modelBuilder.Entity<EFUser>().HasKey(k => k.UserId);
             //modelBuilder.Entity<EFUser>().Property(t => t.UserId).HasColumnName("UserId");
             //base.OnModelCreating(modelBuilder);
-
-
             // 设置主外键关系 / 设置索引 / 針對欄位的處理
             //modelBuilder.HasSequence 创建Sequence
 
