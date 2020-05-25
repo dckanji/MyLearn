@@ -6,15 +6,25 @@ Hello World!<br>
             <th><h2>測試項目</h2></th>
             <th><h2>Message/資料集</h2></th>
     </tr>                    
-    <!-- 呼叫 來自control的webapi測試項目-->
+    <!-- 呼叫 來自EF測試項目-->
     <tr>
       <th>
         <app-eftest></app-eftest>
       </th>
       <th>
-        <router-outlet name="eltestLet"></router-outlet>
+        <router-outlet name="ef_testLet"></router-outlet>
       </th>
 
+    </tr>
+        <!-- 呼叫 來自control的webapi測試項目-->
+        <tr>
+          <th>
+            <app-webapitest></app-webapitest>
+          </th>
+          <th>
+            <router-outlet name="api_testLet"></router-outlet>
+          </th>
+    
     </tr>
     <!-- 臨時測試用組件-->
     <tr>

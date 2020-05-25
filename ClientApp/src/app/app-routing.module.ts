@@ -19,8 +19,12 @@ const routes: Routes = [
   { path: 'myuserbase', component: UserComponent}, //使用者列表from Array ..組件初次載入時,故無轉出outlet產生異常...故須保留此部分...除非載入時就移轉入myuser
   { path: 'myuserary', component: UserComponent, outlet:'myuserLet'},//使用者列表from DB 
   { path: 'myuser/:id', component: UserComponent, outlet:'myuserLet'},//使用者列表from DB 
-  { path: 'message', component: MessagesComponent, outlet:'eltestLet' },//顯示訊息窗, outlet:'eluser'
-  { path: 'eluser/:id', component: UserComponent, outlet:'eltestLet'}//使用者列表from DB, outlet:'eluser' 
+  { path: 'api_message', component: MessagesComponent, outlet:'api_testLet' },//顯示訊息窗, outlet:'eluser'
+  { path: 'api_eluser/:id', component: UserComponent, outlet:'api_testLet'},//使用者列表from DB, outlet:'eluser' 
+
+  { path: 'ef_message', component: MessagesComponent, outlet:'ef_testLet' },//顯示訊息窗, outlet:'eluser'
+  { path: 'ef_user/:id', component: UserComponent, outlet:'ef_testLet'}//使用者列表from DB, outlet:'eluser' 
+
 ];
 
 /**
