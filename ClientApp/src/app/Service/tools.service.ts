@@ -7,6 +7,9 @@ import { MessageService } from './message.service';
 //代表这个类将被注入到根module中。 root(根) / platform(共享平台) / any()
 @Injectable({ providedIn: 'root' })
 export class ToolService {
+  
+
+
   //建構子-添加私有的 messageService，其类型为 MessageService 
   //添加私有的 http，其类型为 HttpClient
   constructor(

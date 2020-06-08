@@ -2,15 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router,  ParamMap} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-
+import { User } from '../Models/User';//引入angular類別組件
 
 //使用者類別
+/*
 export class User {
   id: number;
   name: string;
   age: number;
   date: Date;
-}
+}*/
 
 //組件畫面設計-组件装饰器：每个组件类必须用@component进行装饰才能成为Angular组件
 @Component({

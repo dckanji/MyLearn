@@ -41,10 +41,12 @@ import { WebApiTestComponent } from './MyWebApiTest/webapitest.component';/**測
 
 import { HomeComponent } from './home/home.component'; /** 系統初始 組件 hello world */
 import { UserComponent } from './My_user/user.component'; /** 測試組件-user 帳號..*/
-
-import { EftestComponent } from './MyEFTest/eftest.component';/**測試組件-EF框架.. */
 import { MessagesComponent }    from './messages/messages.component';/**訊息組件 */
 import { MyArrayComponent } from './MyArray/myarray.component';/**陣列組件.. */
+
+import { EftestComponent } from './MyEFTest/eftest.component';/**測試組件-EF框架.. */
+import { MyEF_UserList_Component } from './MyEF/UserList/userlist.component';/**測試組件-EF框架.. */
+import { MyEF_UserDetail_Component } from './MyEF/UserDetail/userdetail.component';/**測試組件-EF框架.. */
 
 /** 測試子母組件 */
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
@@ -82,7 +84,9 @@ import { AppRoutingModule }     from './app-routing.module'; //路由組件
     EftestComponent,
     MessagesComponent,
     MyArrayComponent,
-    WebApiTestComponent
+    WebApiTestComponent,
+    MyEF_UserList_Component,
+    MyEF_UserDetail_Component
   ],
   //exports, /* 設定能在其他模塊 使用*/
   imports: [ /*引入本模块运行依赖的其他模块*/

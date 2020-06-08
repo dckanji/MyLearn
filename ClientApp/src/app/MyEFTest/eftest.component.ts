@@ -40,6 +40,17 @@ import { User } from '../Models/User';//引入angular類別組件
 
       }
 
+      //呼叫使用者查詢模塊
+      public CallEFUserList(): void {
+        //let 為區域變數宣告
+        let distStr = 'ef_userlist';
+
+        const _ef_testLet = { ef_testLet: [distStr] }; //後續可定義在一個通用常數類中...因此後續可以集中管理
+
+        this.router.navigate([{outlets: _ef_testLet}]);
+
+        //this.router.navigate([{outlets: { ef_testLet: ['ef_userlist']}}]);
+    }
 
 
       //網頁端呼叫

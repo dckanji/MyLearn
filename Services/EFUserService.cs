@@ -27,6 +27,22 @@ namespace learn.Services
             //return "test";
         }
 
+        /**
+        傳入sql語法取得 資料
+        */
+        internal DataTable getDBData(string sqlstr, string runtype)
+        {
+            //傳入sql語法
+            if(runtype =="1"){
+                return this.repo.GetDataBySecretContext(sqlstr);
+            }
+            else{
+                return null;
+            }
+            
+            //this.repo.TestSecret();
+            //return "test";
+        }
 
         /**
         使用EF TEST1

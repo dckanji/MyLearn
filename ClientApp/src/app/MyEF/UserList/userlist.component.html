@@ -1,0 +1,42 @@
+<h2>使用者列表資料</h2>
+<div>
+    <button (click)="getUserList()"> 查詢</button>    
+    <button (click)="add()"> 新增</button>    
+</div>
+<!-- 
+    [class.selected]="user === selectedUser" 說明為
+    當選擇到物件 user 時若和  selectedUser 物件一樣,則使用該css類
+-->
+***************************************************
+<div>
+  <!--傳值給子組件進行承接-->
+  <app-myef-userdetail [userdetail]="selectedUser"></app-myef-userdetail>
+***************************************************
+</div>
+
+<ul class="userlists">
+
+    <li *ngFor="let efuser of userList" [class.selected]="efuser === selectedUser" >
+
+            <!--    | uppercase |表示管道 都轉為大寫 管道 是格式化字符串、金额、日期和其它显示数据的好办法
+            <a [routerLink]="[{outlets:{ ef_testLet: ['ef_userDetail',user.id] } }]">
+<span class="badge">{{user.user_id}}</span> {{user.user_name}} 
+            -->
+            <a (click)="getDetail(efuser)">
+
+                
+                <span class="badge">{{efuser.user_id}}</span> {{efuser.name}} 
+            </a>
+
+            <!-- 在當前畫面下帶出明細-->
+            <button class="detail" title="user datail"
+            (click)="getDetail(efuser)"> 修改 </button>
+        
+            <!-- click 外面的圆括号会让 Angular 监听这个 <li> 元素的 click 事件。 当用户点击 <li> 时，Angular 就会执行表达式 onSelect(hero) -->
+            <button class="delete" title="delete hero"
+            (click)="delete(hero)">刪除</button>
+
+    </li>   
+
+</ul>
+

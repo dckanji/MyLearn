@@ -79,8 +79,28 @@ namespace learn.Repositories
                 dt.Load(reader);
                 return dt;
             }
-            
         }
+
+
+        /**
+        透過TestSecretContext 獲取連線資料庫的連線資訊
+        */
+        internal DataTable GetDataBySecretContext(string sqlstr)
+        {
+           
+            using (var conn = _context.GetDbConnection())
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = sqlstr; //直接sql語法
+                var reader = cmd.ExecuteReader();
+                var dt = new DataTable();
+                dt.Load(reader);
+                return dt;
+            }
+        }
+
+
 
         /**
         使用EF進行存取

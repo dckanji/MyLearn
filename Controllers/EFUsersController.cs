@@ -100,6 +100,18 @@ namespace learn.Controllers
 
         }//end EFTest2
 
+        [HttpGet("getEFUser")]
+        public ActionResult getEFUser()
+        {
+            Console.WriteLine("getEFUser***********");
+            string sqlstr = "SELECT * FROM efuser";
+             //回傳
+             DataTable users = this.service.getDBData(sqlstr,"1");
+
+            //回傳字串陣列
+            return Ok(users); 
+
+        }//end EFTest2
 
         
 
