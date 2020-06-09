@@ -53,6 +53,9 @@ namespace learn.Controllers
             //回傳字串陣列
             var str ="Test2 OK";
             return Ok(str);
+            /*
+            注：用OkObjectResult 前台jquery自动解析为object对象，不需要进行反序列化处理
+            */
         }//end Test2
 
         /*
@@ -99,21 +102,42 @@ namespace learn.Controllers
             return Json(msg); 
 
         }//end EFTest2
+        
 
-        [HttpGet("getEFUser")]
-        public ActionResult getEFUser()
+
+        /*
+        帶參數傳遞的function
+        */
+        [HttpGet("getEFTable/{tableName}")]
+        public ActionResult getEFTable(string tableName)
         {
-            Console.WriteLine("getEFUser***********");
-            string sqlstr = "SELECT * FROM efuser";
-             //回傳
-             DataTable users = this.service.getDBData(sqlstr,"1");
-
-            //回傳字串陣列
-            return Ok(users); 
+            Console.WriteLine("getEFTable ***********");
+            string sqlstr = "SELECT * FROM "+ tableName;
+            return Ok(this.getEF(sqlstr)); 
 
         }//end EFTest2
 
-        
+
+
+        /**
+        傳入sql語句連接資料庫..回傳DataTable
+        */
+        private DataTable getEF(string sqlstr)
+        {
+             //回傳
+            DataTable users = this.service.getDBData(sqlstr,"1");
+/*
+            for (int i = 0; i < users.Rows.Count; i++)
+            {
+                Console.WriteLine("**************************************");
+                //Console.WriteLine("users="+users.Rows[i]["user_name"].ToString());
+            }
+            */
+            //回傳字串陣列
+            return users; 
+
+        }//end getEF
+
 
     }//end  UsersController
 

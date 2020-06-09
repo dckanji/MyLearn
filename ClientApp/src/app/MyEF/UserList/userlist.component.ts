@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core'; /*引入 angular 核心*/
 import { ToolService } from '../../Service/tools.service';
 import { EfService } from '../../Service/ef.service';
 import { ActivatedRoute, Router} from '@angular/router';
-import { EFUser } from '../../Models/EFUser';//引入angular類別組件
-
+import { EFUser} from '../../Models/EFUser';//引入angular類別組件
+import { UserTest } from '../../Models/UserTest';//引入angular類別組件
   
 @Component({
     selector: 'app-myef-userlist',
@@ -16,11 +16,13 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
        
       //宣告一個user類的物件陣列
       userList: EFUser[];
-      /* = [ 
+     /*  = [ 
                   { user_id: 1, user_name: 'AAAAAA', user_age: 18, creation_date: new Date() },
                   { user_id: 2, user_name: 'BBBBBB', user_age: 19, creation_date: new Date() },
                   { user_id: 3, user_name: 'CCCCCC', user_age: 23, creation_date: new Date() },
                 ];*/
+      userList2: UserTest[]
+
       selectedUser: EFUser;
 
       //构造函数-載入通用服務  
@@ -30,12 +32,6 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
         private activerouter: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
         private router: Router,) { 
         
-
-          this.http.get<EFUser[]>('/api/EFUser/getEFUser').subscribe(data => {
-            this.userList = data;
-                  }
-          );
-
       } 
         
 
@@ -44,30 +40,25 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
       }
 
       /**
-       * 透過 heroService.getHeroes 獲取英雄列表資料
+       * 獲取使用者列表資料
        */
       getUserList(): void {
 
         console.log('getUserList-');
-/*
-        this.http.get<EFUser[]>('/api/EFUser/getEFUser').subscribe(data => {
-          this.userList = data;
-                }
-        );
-*/
-        //回傳user類的物件陣列
-      /*  this.userList = [ 
-                        { user_id: 1, user_name: 'AAAAAA', user_age: 18, creation_date: new Date() },
-                        { user_id: 2, user_name: 'BBBBBB', user_age: 19, creation_date: new Date() },
-                        { user_id: 3, user_name: 'CCCCCC', user_age: 23, creation_date: new Date() },
-                      ];*/
-/*
-      this.http.get<EFUser[]>('/api/EFUser/getEFUser').subscribe(data => {
-        this.userList = data;
-              }
-      );
 
-*/
+        let table_name = "efuser";
+        this.http.get<EFUser[]>('/api/EFUser/getEFTable/'+table_name).subscribe(data => {
+              this.userList = data;
+              for (let efuser of this.userList) {
+                console.log("EFUSER name="+efuser.useR_NAME); // 1, "string", false
+                console.log("EFUSER TEST ="+efuser.usertest); // 1, "string", false
+              }
+              //console.log('getUserList-'+this.userList.values[]);
+            }
+        );
+
+
+
 
       }
 
