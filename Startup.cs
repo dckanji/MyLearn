@@ -32,9 +32,10 @@ namespace learn
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            
             //使用UserSecrets設定連接字串
             //services.AddTransient<TestSecretRepository>();
-            services.AddDbContext<TestSecretDbContext>(options => 
+            services.AddDbContext<UserSecretDbContext>(options => 
                 options.UseOracle(Configuration.GetConnectionString("MyTestSecretConnection"))
             );
             

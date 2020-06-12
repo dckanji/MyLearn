@@ -1,5 +1,8 @@
+
 using System.Data;
 using learn.Repositories;
+using System.Collections.Generic;
+using learn.Models;
 
 /*
 增加SERVICE 需要再Startup.cs中設定服務類
@@ -18,51 +21,53 @@ namespace learn.Services
         }
 
 
-        /**
-        使用EF進行存取
-        */
-        internal string SetEFUser()
-        {
-            return this.repo.SetEFUsers();
-            //return "test";
-        }
+
 
         /**
-        傳入sql語法取得 資料
+        傳入sql語法取得 Datatable物件資料
+        @runtype 1為用command方式連接資料庫..2表示用ef方式
         */
         internal DataTable getDBData(string sqlstr, string runtype)
         {
             //傳入sql語法
             if(runtype =="1"){
-                return this.repo.GetDataBySecretContext(sqlstr);
+                return this.repo.GetDataBySqlstr(sqlstr);
             }
             else{
                 return null;
             }
-            
-            //this.repo.TestSecret();
-            //return "test";
+        }
+
+
+        /**
+        取得EFUser資料列表..回傳IEnumerable<EFUser>
+        */
+        public IEnumerable<EFUser> GetEFUserToIEnumerable()
+        {
+            return  this.repo.EFGetEFUserToIEnumerable();
         }
 
         /**
-        使用EF TEST1
+        取得EFUser資料列表..回傳List<EFUser>
         */
-        internal string EFTest1()
+        public List<EFUser> GetEFUserToList()
         {
-            return this.repo.EFTest1();
-            //this.repo.TestSecret();
-            //return "test";
+            return  this.repo.EFGetEFUserToList();
         }
 
+
+
+
         /**
-        使用EF TEST2
+        使用EF TEST1 - 測試寫入
         */
-        internal string EFTest2()
+        internal string EFTest(string runtype)
         {
-            return this.repo.EFTest2();
-            //this.repo.TestSecret();
-            //return "test";
+            return this.repo.EFTest(runtype);
+            //return "test1";
         }
+
+
 
     }
 }

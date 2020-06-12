@@ -14,7 +14,7 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
 
   export class MyEF_UserDetail_Component implements OnInit { /*实现接口*/  
        
-      //宣告一個user類的物件陣列
+      //宣告一個user類的物件陣列..接收父祖件的傳值
       @Input() userdetail: EFUser;
 
       //构造函数-載入通用服務  

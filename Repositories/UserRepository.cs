@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
+using learn.EFDB;
 
 namespace learn.Repositories
 {
@@ -24,31 +25,24 @@ namespace learn.Repositories
             }
         }
 
-        public void SetUsers(){
-/*
-            Database.SetInitializer(new DropCreateDatabaseAlways<OracleDbContext>());
-22 
-23             using (var ctx = new OracleDbContext())
-24             {
-25                 var emp = new Employee
-26                 {
-27                     Name = "Tom",
-28                     HireDate = DateTime.Now
-29                 };
-30 
-31                 ctx.Employees.Add(emp);
-32                 ctx.SaveChanges();
-33 
-34                 var dept = new Department
-35                 {
-36                     Name = "Accounting",
-37                     ManagerId = emp.EmployeeId
-38                 };
-39 
-40                 ctx.Departments.Add(dept);
-41                 ctx.SaveChanges();
-*/
+        /**
+        透過DbContext 獲取連線資料庫的連線資訊
+        */
+        internal DataTable GetUsersBySqlstr(string sqlstr)
+        {
+            MylearnDbContext mydb = new MylearnDbContext();
+
+            using (var conn = mydb.GetDbConnection())
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = sqlstr; //直接sql語法
+                var reader = cmd.ExecuteReader();
+                var dt = new DataTable();
+                dt.Load(reader);
+                return dt;
+            }
         }
-        
+
     }
 }

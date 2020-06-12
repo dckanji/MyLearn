@@ -44,10 +44,11 @@ import { User } from '../Models/User';//引入angular類別組件
        */
       public CallWebApi(testType: string): void {
             //console.log('CallWebApi-'+testType);
-           
+            let apiUrl = "/api/EFUser/TestApi"+testType;
+
             if (testType =='1'){
               //若傳回為物件類-傳回一個User[]的陣列
-              this.http.get<User[]>('/api/EFUser/Test1').subscribe( data=>{
+              this.http.get<User[]>(apiUrl).subscribe( data=>{
                 this.users = data;
                 this.msgDesc ="陣列數-"+this.users.length.toString();
                 //this.isMsgType = 'data';
@@ -64,7 +65,7 @@ import { User } from '../Models/User';//引入angular類別組件
             }
             else if (testType == '2'){
               //若傳回為字串, 則需轉為text 進行接收
-              this.http.get('/api/EFUser/Test2',{'responseType':'text'})
+              this.http.get(apiUrl,{'responseType':'text'})
                 .subscribe(data => {
                   this.msgDesc = data
                   //console.log('Type2:'+this.msgDesc);
@@ -75,7 +76,7 @@ import { User } from '../Models/User';//引入angular類別組件
             }
             else if(testType =='3'){
               //若傳回為json格式或物件類則使用此方式..any可代入相應類別.
-              this.http.get<any>('/api/EFUser/Test3').subscribe( data=>{
+              this.http.get<any>(apiUrl).subscribe( data=>{
                 this.msgDesc = data;
                 //console.log('Type3-'+data);
                 this.toolService.log('3.json物件回傳:'+this.msgDesc);

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ToolService } from '../Service/tools.service';
-import { User } from '../Models/User';//引入angular類別組件
+import { EFUser } from '../Models/EFUser';//引入angular類別組件
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,6 +34,20 @@ export class EfService {
       private toolService: ToolService) 
     { }
     
+    /**
+     * 呼叫 HTTP WEB API..且有統一的異常處理
+     * 回傳 Observable 類型物件..透過 HttpClient.get 方法来获取英雄数据
+     * Observable 是 RxJS 库中的一个关键类。
+     * 呼叫方可透過 Observable.subscribe() 進行獲取
+    */
+    CallEFWebApi(apiurl:string): Observable<any[]>{
+
+          return this.http.get<any[]>(apiurl).pipe(
+            tap(_ => console.log('CALL CallEFWebApi ')),  // RxJS 的 tap() 操作符来实现-该操作符会查看 Observable 中的值，使用那些值做一些事情，并且把它们传出来
+            catchError(this.handleError<any>('CallEFWebApi-'+apiurl)) //RxJS 的 catchError() 異常處理
+            //操作符会拦截失败的 Observable。 它把错误对象传给错误处理器，错误处理器会处理这个错误。
+        );
+    }
 
     /**
      *  呼叫 ef後端 controller web api

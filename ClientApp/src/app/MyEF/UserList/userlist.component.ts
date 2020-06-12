@@ -16,12 +16,6 @@ import { UserTest } from '../../Models/UserTest';//引入angular類別組件
        
       //宣告一個user類的物件陣列
       userList: EFUser[];
-     /*  = [ 
-                  { user_id: 1, user_name: 'AAAAAA', user_age: 18, creation_date: new Date() },
-                  { user_id: 2, user_name: 'BBBBBB', user_age: 19, creation_date: new Date() },
-                  { user_id: 3, user_name: 'CCCCCC', user_age: 23, creation_date: new Date() },
-                ];*/
-      userList2: UserTest[]
 
       selectedUser: EFUser;
 
@@ -34,33 +28,44 @@ import { UserTest } from '../../Models/UserTest';//引入angular類別組件
         
       } 
         
-
       ngOnInit() { /*初始化加载的生命周期函数*/
         this.getUserList();
       }
 
       /**
-       * 獲取使用者列表資料
+       * 獲取EFUser 的列表資料
        */
-      getUserList(): void {
+      public getUserList(): void {
+        let apiurl = '/api/EFUser/getEFUserList';
 
-        console.log('getUserList-');
+        this.efService.CallEFWebApi(apiurl).subscribe(data =>{
+          this.userList = data
+        /*
+        this.http.get<EFUser[]>('/api/EFUser/getEFUserList').subscribe(data => {
+          this.userList = data;
+        });//end http
+        */
+        });//end http
+      }//getUserList END
 
-        let table_name = "efuser";
-        this.http.get<EFUser[]>('/api/EFUser/getEFTable/'+table_name).subscribe(data => {
-              this.userList = data;
-              for (let efuser of this.userList) {
+
+      /**
+       * 依據table名稱獲取該table的資料列表 
+       * @param tableName 傳入的table名稱如 efuser
+       */
+      public getTableData(tableName:string): void {
+        let apiurl = '/api/EFUser/getTableData/'+tableName;
+
+        this.efService.CallEFWebApi(apiurl).subscribe(data =>
+              this.userList = data
+             /* for (let efuser of this.userList) {
                 console.log("EFUSER name="+efuser.useR_NAME); // 1, "string", false
                 console.log("EFUSER TEST ="+efuser.usertest); // 1, "string", false
               }
-              //console.log('getUserList-'+this.userList.values[]);
-            }
+              */
         );
+      }//getTableData END
 
-
-
-
-      }
 
 
       /**
@@ -71,8 +76,6 @@ import { UserTest } from '../../Models/UserTest';//引入angular類別組件
           this.selectedUser = user;
          // this.messageService.add(`Heroes主組件上的訊息輸出: 選擇的英雄ID=${hero.id} 名稱=${hero.name}`);
       }
-
-
 
 
 
