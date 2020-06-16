@@ -1,13 +1,10 @@
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core'; /*引入 angular 核心*/ 
 import { ToolService } from '../Service/tools.service';
 import { EfService } from '../Service/ef.service';
-import {catchError, map, tap } from 'rxjs/operators'
-import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router,  ParamMap} from '@angular/router';
 import { User } from '../Models/User';//引入angular類別組件
 
-  
 @Component({
     selector: 'app-eftest',
     templateUrl: './eftest.component.html',
@@ -22,7 +19,8 @@ import { User } from '../Models/User';//引入angular類別組件
       constructor(
         private toolService: ToolService, 
         private efService: EfService,
-        private router: Router,) { 
+        private router: Router
+        ) { 
         
       } 
         
@@ -32,6 +30,8 @@ import { User } from '../Models/User';//引入angular類別組件
 
       //呼叫 MYEF組件(EF框架的 使用者查詢模塊)
       public CallEFUserList(): void {
+       
+
         //let 為區域變數宣告
         let distStr = 'ef_userlist';
         const _ef_testLet = { ef_testLet: [distStr] }; //後續可定義在一個通用常數類中...因此後續可以集中管理

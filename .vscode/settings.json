@@ -1,3 +1,4 @@
 {
-    "view-in-browser.customBrowser": "mozilla"
+    "view-in-browser.customBrowser": "mozilla",
+    "git.ignoreLimitWarning": true
 }

@@ -4,8 +4,9 @@ import { ToolService } from '../../Service/tools.service';
 import { EfService } from '../../Service/ef.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { EFUser } from '../../Models/EFUser';//引入angular類別組件
+import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
-  
 @Component({
     selector: 'app-myef-userdetail',
     templateUrl: './userdetail.component.html',
@@ -22,9 +23,10 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
         private toolService: ToolService, 
         private efService: EfService,
         private activerouter: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
-        private router: Router,) { 
-        
-      } 
+        private location: Location,//是一个 Angular 的服务，用来与浏览器打交道 稍后，你就会使用它来导航回上一个视图) 
+        private toastrService: ToastrService
+        ) 
+        {} 
         
 
       ngOnInit() { /*初始化加载的生命周期函数*/
@@ -42,6 +44,34 @@ import { EFUser } from '../../Models/EFUser';//引入angular類別組件
 
 
 
+  /**
+   * 回上一層
+   */
+  goBack(): void {
+    this.location.back();
+  }
+
+  /**
+   * 存檔
+   */
+  save(){
+     /* this.heroService.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+        */
+       this.toastrService.info('info提示', '这已经是第一页了');
+       this.toastrService.success('success提示', '这已经是第一页了',{
+         closeButton: true,
+         positionClass: "toast-bottom-center"
+        })
+        ;
+
+        this.toastrService.warning('warning提示', '这已经是第一页了');
+        this.toastrService.error('error提示', '这已经是第一页了');
+        
+  }
+
+  
 
 
-    }//end clss
+
+}//end clss

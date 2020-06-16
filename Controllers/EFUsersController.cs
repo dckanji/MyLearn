@@ -24,6 +24,40 @@ namespace learn.Controllers
             this.service = service;
         }
         
+        /*
+        透過EF方式取得 EFUserList 列表資料
+        */
+        [HttpGet("EFSave")]
+        public ActionResult EFSave()
+        {
+            //Console.WriteLine("getEFTable ***********");
+            var str ="EFSave OK";
+            return Json(str);           
+        }//end EFSave
+
+        /*
+        透過EF方式取得 EFUserList 列表資料
+        */
+        [HttpGet("EFDel")]
+        public ActionResult EFDel()
+        {
+            //Console.WriteLine("getEFTable ***********");
+            var str ="EFDel OK";
+            return Json(str);           
+        }//end EFDel
+
+        /*
+        透過EF方式取得 EFUserList 列表資料
+        */
+        [HttpGet("EFUpdate")]
+        public ActionResult EFUpdate()
+        {
+            //Console.WriteLine("getEFTable ***********");
+            var str ="EFUpdate OK";
+            return Json(str);           
+        }//end EFSave
+
+
 
 
         /*

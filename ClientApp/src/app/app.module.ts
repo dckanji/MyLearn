@@ -10,6 +10,8 @@
  * ./My_user/user.component => C:\00_WORKSPACE\MyLearn\ClientApp\src\app\My_user
 */
 import { BrowserModule } from '@angular/platform-browser'; /*BrowserModule，浏览器解析的模块*/ 
+
+
 import { NgModule } from '@angular/core'; /*angualrjs 核心模块*/
 import { FormsModule } from '@angular/forms'; /*表单数据绑定 表单验证需要的模块*/ 
 import { HttpClientModule } from '@angular/common/http'; /*数据请求模块*/ 
@@ -52,8 +54,11 @@ import { MyEF_UserDetail_Component } from './MyEF/UserDetail/userdetail.componen
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
 import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
 
-//以下皆來自heroes 範例中的組件
+/*****特殊組件設定*******/
 import { AppRoutingModule }     from './app-routing.module'; //路由組件
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/**提示框訊息组件依賴項 */
+import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
+
 
 /*
  Angular 应用是模块化的，它拥有自己的模块化系统，称作 NgModule
@@ -103,7 +108,9 @@ import { AppRoutingModule }     from './app-routing.module'; //路由組件
     当所有路由都在同一个 AppRoutingModule 时，你要把默认路由和通配符路由放在最后（这里是在 /heroes 路由后面），
     这样路由器才有机会匹配到 /heroes 路由，否则它就会先遇到并匹配上该通配符路由，并导航到“页面未找到”路由。
     */
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   /**
    * 本模块向全局服务中贡献的那些服务的创建器。 这些服务能被本应用中的任何部分使用。

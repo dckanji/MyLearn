@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core'; /*引入 angular 核心*/ 
+import { ToastrService } from 'ngx-toastr';
 
 /**@Component() 装饰器会把一些特定种类的元数据附加到类上，
  * 以便讓 Angular 了解这些这些类的含义以及该如何使用它们..
@@ -15,7 +16,8 @@ import { Component, OnInit } from '@angular/core'; /*引入 angular 核心*/
 
 export class MytestComponent implements OnInit { /*实现接口*/ 
 
-  constructor() { } /*构造函数*/
+  constructor(private toastrService: ToastrService
+    ) { } /*构造函数*/
 
   /**服务类的范例，用于把日志记录到 浏览器的控制台(如 chrome: f12 -> consle) */
   log(msg:any){console.log(msg);}
@@ -26,6 +28,23 @@ export class MytestComponent implements OnInit { /*实现接口*/
     
   }
 
+  /**
+   * 存檔
+   */
+  showPop(){
+    /* this.heroService.updateHero(this.hero)
+       .subscribe(() => this.goBack());
+       */
+      this.toastrService.info('info提示', '这已经是第一页了');
+      this.toastrService.success('success提示', '这已经是第一页了',{
+        closeButton: true,
+        positionClass: "toast-center-center"
+       });
+
+       this.toastrService.warning('warning提示', '这已经是第一页了');
+       this.toastrService.error('error提示', '这已经是第一页了');
+       
+ }
 
 
 
