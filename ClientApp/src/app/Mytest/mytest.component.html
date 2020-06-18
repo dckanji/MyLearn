@@ -1,8 +1,25 @@
 <p>This is Mytest Component!</p>
 <p>組件測試!</p>
 <div>
-                <!-- 在當前畫面下帶出明細-->
-                <button (click)="showPop()"> 提示訊息 </button>
+                <!-- 訊息提示-->
+                <button (click)="showPop()">ngx-toastr訊息 </button>
+                <button (click)="showZorroDilog()">ngx-zorro訊息 </button>
+</div>
+<div> ngx-zorro 按鈕樣式:</div>
+<div>
+<button nz-button [nzType]="'primary'">primary</button>
+<button nz-button [nzType]="'dashed'">dashed</button>
+<button nz-button [nzType]="'default'">default</button>
+<button nz-button [nzType]="'danger'">danger</button>
+<button nz-button [nzShape]="'default'">defaultShape</button>
+</div>
 
+<div>
+<button nz-button [nzShape]="'circle'">O</button>
+<button nz-button [nzSize]="'large'">L</button>
+<button nz-button [nzSize]="'default'">M</button>
+<button nz-button [nzSize]="'small'">S</button>
+<button nz-button [nzGhost]="true">L</button>
+<button nz-button [nzLoading]="true">L</button>
 </div>
 

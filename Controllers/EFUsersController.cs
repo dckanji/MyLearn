@@ -27,11 +27,11 @@ namespace learn.Controllers
         /*
         透過EF方式取得 EFUserList 列表資料
         */
-        [HttpGet("EFSave")]
-        public ActionResult EFSave()
+        [HttpGet("EFInsert")]
+        public ActionResult EFInsert()
         {
             //Console.WriteLine("getEFTable ***********");
-            var str ="EFSave OK";
+            var str ="EFInsert OK";
             return Json(str);           
         }//end EFSave
 

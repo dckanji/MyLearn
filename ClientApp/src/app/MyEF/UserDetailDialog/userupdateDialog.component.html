@@ -1,0 +1,12 @@
+<h2>{{ userid }} {{ username }}使用者明細資料</h2>
+
+<div *ngIf="updateUserDetail">
+    <h2>{{ userid }} {{ username }}使用者明細資料</h2>
+    <div><span><label>員工姓名:</label></span><input [(ngModel)]="updateUserDetail.userName" placeholder="請輸入員工姓名"/></div>
+    
+    <button (click)="goBack()">取消</button>
+    <button (click)="save()">存檔</button>
+
+
+</div>
+

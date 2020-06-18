@@ -34,6 +34,12 @@ export class EfService {
       private toolService: ToolService) 
     { }
     
+
+ 
+
+
+
+
     /**
      * 呼叫 HTTP WEB API..且有統一的異常處理
      * 回傳 Observable 類型物件..透過 HttpClient.get 方法来获取英雄数据

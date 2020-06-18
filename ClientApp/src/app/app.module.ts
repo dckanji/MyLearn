@@ -49,6 +49,9 @@ import { MyArrayComponent } from './MyArray/myarray.component';/**陣列組件..
 import { EftestComponent } from './MyEFTest/eftest.component';/**測試組件-EF框架.. */
 import { MyEF_UserList_Component } from './MyEF/UserList/userlist.component';/**測試組件-EF框架.. */
 import { MyEF_UserDetail_Component } from './MyEF/UserDetail/userdetail.component';/**測試組件-EF框架.. */
+import { MyEF_UserUpdate_Component } from './MyEF/UserUpdate/userupdate.component';/**測試組件-EF框架.. */
+import { MyEF_UserUpdateDialog_Component } from './MyEF/UserDetailDialog/userupdateDialog.component';/**測試組件-EF框架.. */
+
 
 /** 測試子母組件 */
 import { MyDemoChildComponent } from './MyDemo/Demo.Child.Component';
@@ -58,6 +61,7 @@ import { MyDemoParentComponent } from './MyDemo/Demo.Parent.Component';
 import { AppRoutingModule }     from './app-routing.module'; //路由組件
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/**提示框訊息组件依賴項 */
 import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
+import { NgZorroAntdModule } from 'ng-zorro-antd'; /* ngzorro 組件 */
 
 
 /*
@@ -91,7 +95,9 @@ import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
     MyArrayComponent,
     WebApiTestComponent,
     MyEF_UserList_Component,
-    MyEF_UserDetail_Component
+    MyEF_UserDetail_Component,
+    MyEF_UserUpdate_Component,
+    MyEF_UserUpdateDialog_Component
   ],
   //exports, /* 設定能在其他模塊 使用*/
   imports: [ /*引入本模块运行依赖的其他模块*/
@@ -110,14 +116,18 @@ import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
     */
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgZorroAntdModule
   ],
   /**
    * 本模块向全局服务中贡献的那些服务的创建器。 这些服务能被本应用中的任何部分使用。
    * （你也可以在组件级别指定服务提供者，这通常是首选方式。）
    */
   providers: [], 
-  
+
+  /**入口组件（entry component）是通过组件的类型动态加载
+   * 主要可以分为引导入口组件和路由到的入口组件 */
+  entryComponents: [MyEF_UserUpdateDialog_Component],
   /** 
    *  指定应用的主视图（称为根组件） 通过引导根 AppModule 来启动应用  ，这里一般写的是根组件
    *  应用的主视图，称为根组件。它是应用中所有其它视图的宿主。只有根模块才应该设置这个 bootstrap 属性

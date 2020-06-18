@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core'; /*引入 angular 核心*/ 
 import { ToastrService } from 'ngx-toastr';
+import { NzModalService } from 'ng-zorro-antd';
 
 /**@Component() 装饰器会把一些特定种类的元数据附加到类上，
  * 以便讓 Angular 了解这些这些类的含义以及该如何使用它们..
@@ -16,7 +17,10 @@ import { ToastrService } from 'ngx-toastr';
 
 export class MytestComponent implements OnInit { /*实现接口*/ 
 
-  constructor(private toastrService: ToastrService
+
+  constructor(
+    private toastrService: ToastrService,
+    private modalService: NzModalService,
     ) { } /*构造函数*/
 
   /**服务类的范例，用于把日志记录到 浏览器的控制台(如 chrome: f12 -> consle) */
@@ -28,8 +32,22 @@ export class MytestComponent implements OnInit { /*实现接口*/
     
   }
 
+
   /**
-   * 存檔
+   * ZorroDilog
+   */
+  showZorroDilog(){
+
+    this.modalService.info({
+      nzTitle: '訊息測試',
+      nzWidth: '50%',
+      nzOnOk: () => console.log('Info OK')
+  })
+
+  }
+
+  /**
+   * toastr 訊息
    */
   showPop(){
     /* this.heroService.updateHero(this.hero)

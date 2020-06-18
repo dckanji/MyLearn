@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './My_user/user.component';
 import { MessagesComponent }    from './messages/messages.component';/**訊息組件 */
 import { MyEF_UserList_Component } from './MyEF/UserList/userlist.component';/**測試組件-EF框架.. */
+import { MyEF_UserUpdate_Component } from './MyEF/UserUpdate/userupdate.component';/**測試組件-EF框架.. */
 
 /** 路由連接 
  * path: 用来匹配浏览器地址栏中 URL 的字符串
@@ -24,7 +25,9 @@ const routes: Routes = [
 
   { path: 'ef_message', component: MessagesComponent, outlet:'ef_testLet' },//顯示訊息窗, outlet:'eluser'
   { path: 'ef_userlist', component: MyEF_UserList_Component, outlet:'ef_testLet'},//使用者列表from DB, outlet:'eluser' 
-  { path: 'ef_userDetail/:id', component: MyEF_UserList_Component, outlet:'ef_testLet'}//使用者列表from DB, outlet:'eluser' 
+  { path: 'ef_userDetail/:id', component: MyEF_UserList_Component, outlet:'ef_testLet'},//使用者列表from DB, outlet:'eluser' 
+  { path: 'ef_update', component: MyEF_UserUpdate_Component, outlet:'ef_testLet' },//顯示訊息窗, outlet:'eluser'
+
 ];
 
 

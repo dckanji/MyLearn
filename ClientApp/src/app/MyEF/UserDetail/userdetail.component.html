@@ -1,11 +1,10 @@
-<div *ngIf="userdetail">
-    <h2>{{userdetail.userName}}使用者明細資料</h2>
-    <div><span>id: </span>{{userdetail.userId}}</div>
-    <div><span>name: </span>{{userdetail.userName}}</div>
-    <div><span><label>員工姓名:</label></span><input [(ngModel)]="userdetail.userName" placeholder="請輸入員工姓名"/></div>
-    
-    <button (click)="goBack()">go back</button>
-    <button (click)="save()">存檔</button>
-
-
+<div *ngIf="runType == 'select'">
+    <div *ngIf="userDetail">
+        <h2>{{userDetail.userName}}使用者明細資料</h2>
+        <div><span>id: </span>{{userDetail.userId}}</div>
+        <div><span>name: </span>{{userDetail.userName}}</div>
+        <div><span>age: </span>{{userDetail.userAge}}</div>
+        <div><span>creationDate: </span>{{userDetail.creationDate}}</div>
+        <div><span>deptNo: </span>{{userDetail.deptNo}}</div>
+    </div>
 </div>

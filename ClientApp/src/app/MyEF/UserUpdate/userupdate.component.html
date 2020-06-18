@@ -1,0 +1,27 @@
+<div *ngIf="runType == 'EFUpdate' || runType == 'EFInsert'  ">
+    <div *ngIf="runType == 'EFUpdate'">
+        <div *ngIf="userDetail"> 
+                <h2> {{ userDetail.userName }}員工明細資料(id:{{ userDetail.userId }})</h2>
+                <div><span><label>員工姓名:</label></span><input [(ngModel)]="userDetail.userName" placeholder="請輸入員工姓名"/></div>
+                <div><span><label>年齡:</label></span><input [(ngModel)]="userDetail.userAge" placeholder="請輸入年齡"/></div>
+                <div><span><label>到職日期:</label></span><input [(ngModel)]="userDetail.creationDate" placeholder="請輸入到職日期"/></div>
+                <div><span><label>部門編號:</label></span><input [(ngModel)]="userDetail.deptNo" placeholder="請輸入所屬部門"/></div>
+        </div>
+    </div>
+
+    <div *ngIf="runType == 'EFInsert'">
+    
+            <h2> 新增員工資料</h2>
+            <div><span><label>員工姓名:</label></span><input placeholder="請輸入員工姓名"/></div>
+            <div><span><label>年齡:</label></span><input  placeholder="請輸入年齡"/></div>
+            <div><span><label>到職日期:</label></span><input placeholder="請輸入到職日期"/></div>
+            <div><span><label>部門編號:</label></span><input placeholder="請輸入所屬部門"/></div>
+
+    </div>
+    <button (click)="goBack()">取消</button>
+    <button (click)="save(runType)">存檔</button>
+</div>
+
+   
+
+    
