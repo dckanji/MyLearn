@@ -14,18 +14,24 @@ label {
   button {
     margin-top: 20px;
     font-family: Arial;
-    background-color: #eee;
+    background-color: rgb(161, 197, 243);
+    color: aliceblue;
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer; cursor: hand;
   }
   button:hover {
-    background-color: #cfd8dc;
+    background-color: rgb(42, 119, 219);
   }
   button:disabled {
     background-color: #eee;
     color: #ccc;
     cursor: auto;
   }
-  
+
+  [nz-button] {
+    background-color: rgb(69, 204, 228);
+    margin-right: 8px;
+    margin-bottom: 12px;
+  }

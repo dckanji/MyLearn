@@ -21,6 +21,7 @@ namespace learn.EFDB
         /*建構函數由系統(Startup.cs)寫入連接參數... 提供 DbContextOptions
         連接參數來自 UserSecretsId 所設定的檔案
         %user%/%AppData%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+        因此不用在 OnConfiguring 中設定
         */
         public UserSecretDbContext(DbContextOptions<UserSecretDbContext> options):base(options){
             var a = this.Database;

@@ -7,19 +7,75 @@
                 <div><span><label>到職日期:</label></span><input [(ngModel)]="userDetail.creationDate" placeholder="請輸入到職日期"/></div>
                 <div><span><label>部門編號:</label></span><input [(ngModel)]="userDetail.deptNo" placeholder="請輸入所屬部門"/></div>
         </div>
+        <button (click)="goBack()">取消</button>
+        <button (click)="save(runType)">存檔</button>
     </div>
 
+    <!-- 新增寫入的區塊-->
     <div *ngIf="runType == 'EFInsert'">
-    
             <h2> 新增員工資料</h2>
-            <div><span><label>員工姓名:</label></span><input placeholder="請輸入員工姓名"/></div>
-            <div><span><label>年齡:</label></span><input  placeholder="請輸入年齡"/></div>
-            <div><span><label>到職日期:</label></span><input placeholder="請輸入到職日期"/></div>
-            <div><span><label>部門編號:</label></span><input placeholder="請輸入所屬部門"/></div>
+            <!--使用 ng-zorro 的表單-->
+            <nz-card [nzBordered]="false" [nzLoading]="loading">
+                <form nz-form [formGroup]="form" nzLayout="horizontal">
+                    <nz-form-item>
+                        <!--antd 是以 24 等分的栅格来划分区域-->
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入員工編號">ID</nz-form-label>
+                        <nz-form-control [nzSm]="10" [nzXs]="24">
+                            <input nz-input formControlName="userid">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <!--antd 是以 24 等分的栅格来划分区域-->
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入姓名">員工姓名</nz-form-label>
+                        <nz-form-control [nzSm]="10" [nzXs]="24">
+                            <input nz-input formControlName="username">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzPlaceHolder="请輸入年齡">員工年齡</nz-form-label>
+                        <nz-form-control [nzSm]="10" [nzXs]="24">
+                            <input nz-input formControlName="userage">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入到職日期" >到職日期</nz-form-label>
+                        <nz-form-control [nzSm]="10" [nzXs]="24">
+                            <input nz-input formControlName="creationdate">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>所屬部門</nz-form-label>
+                        <nz-form-control [nzSm]="10" [nzXs]="24">
+                            <nz-select (click)="getdeptList()" formControlName="deptno" id="deptno" 
+                                nzPlaceHolder="请选择部門" nzShowSearch>
+                                <nz-option *ngFor="let dept of deptLists" [nzLabel]="dept.name" [nzValue]="dept.code"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
 
+                    <!-- [disabled]="!form.dirty || form.invalid" 
+                        valid标记表单元素有效； 
+                        invalid标记表单元素无效； 
+                        pristine表示表单元素是纯净的，用户未操作过； 
+                        dirty表示表单元素是已被用户操作过 -->
+                    <nz-form-item >
+                        <nz-form-control [nzSpan]="4" [nzOffset]="4" [nzXs]="24">
+                          <button nz-button nzType="primary" 
+                                  (click)="save(runType)"
+                                  [disabled]="!form.dirty || form.invalid"
+                                  [nzLoading]="saving">
+                            <i nz-icon nzType="save" nzTheme="outline"></i>
+                            儲存</button>
+
+                          <button nz-button (click)="goBack()" >取消</button>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                </form>
+            </nz-card>
+ 
     </div>
-    <button (click)="goBack()">取消</button>
-    <button (click)="save(runType)">存檔</button>
+
 </div>
 
    

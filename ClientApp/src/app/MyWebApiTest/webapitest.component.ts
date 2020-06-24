@@ -44,7 +44,7 @@ import { User } from '../Models/User';//引入angular類別組件
        */
       public CallWebApi(testType: string): void {
             //console.log('CallWebApi-'+testType);
-            let apiUrl = "/api/EFUser/TestApi"+testType;
+            let apiUrl = "/api/Test/TestApi"+testType;
 
             if (testType =='1'){
               //若傳回為物件類-傳回一個User[]的陣列

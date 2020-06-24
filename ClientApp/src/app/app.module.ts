@@ -13,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser'; /*BrowserModule，浏
 
 
 import { NgModule } from '@angular/core'; /*angualrjs 核心模块*/
-import { FormsModule } from '@angular/forms'; /*表单数据绑定 表单验证需要的模块*/ 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';/*表单数据绑定 表单验证需要的模块*/ 
 import { HttpClientModule } from '@angular/common/http'; /*数据请求模块*/ 
 /**
  * 路由模塊
@@ -63,7 +63,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/
 import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
 import { NgZorroAntdModule } from 'ng-zorro-antd'; /* ngzorro 組件 */
 
-
 /*
  Angular 应用是模块化的，它拥有自己的模块化系统，称作 NgModule
  一个 NgModule 就是一个容器，用于存放一些内聚的代码块，
@@ -97,13 +96,14 @@ import { NgZorroAntdModule } from 'ng-zorro-antd'; /* ngzorro 組件 */
     MyEF_UserList_Component,
     MyEF_UserDetail_Component,
     MyEF_UserUpdate_Component,
-    MyEF_UserUpdateDialog_Component
+    MyEF_UserUpdateDialog_Component,
   ],
   //exports, /* 設定能在其他模塊 使用*/
   imports: [ /*引入本模块运行依赖的其他模块*/
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

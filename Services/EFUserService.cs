@@ -3,6 +3,8 @@ using System.Data;
 using learn.Repositories;
 using System.Collections.Generic;
 using learn.Models;
+using System.Threading.Tasks;
+using System;
 
 /*
 增加SERVICE 需要再Startup.cs中設定服務類
@@ -13,6 +15,7 @@ namespace learn.Services
     {
         //後端資料提供類
         private readonly EFUserRepository repo;
+
 
         //建構子
         public EFUserService(EFUserRepository repo)
@@ -56,6 +59,37 @@ namespace learn.Services
         }
 
 
+        /**
+        寫入資料..回傳資料庫異動狀態
+        */
+        public string EFUserInsert(EFUser efuser)
+        {
+
+            return  "ok";
+        }
+
+        /**
+        建立使用者
+        async方法只可以返回void，Task和Task<T>
+        */
+        public async Task<EFUser> EFUserCreateAsync(EFUser efuser)
+        {
+
+            //檢查帳號是否存在
+
+            //若不存在則建立帳號
+            //取得id
+            //var efuser1 =  await "test";
+            
+           /* var user = context.HttpContext.User;
+            var creatorId =  (await userManager.GetUserAsync(user)).Id
+
+var id = (int)result.GetType().GetProperty("Id").GetValue(result, null);
+*/
+           // return CreatedAtAction(nameof(GetById), new { id }, result);
+
+            return efuser;
+        }
 
 
         /**
@@ -66,6 +100,16 @@ namespace learn.Services
             return this.repo.EFTest(runtype);
             //return "test1";
         }
+
+        /*
+        檢查帳號是否存在..傳入名稱
+        */
+     /*   public async Task<bool> IsAccountExistsAsync(string account)
+        {
+            var user;// = await userManager.FindByNameAsync(account);
+            return user != null;
+        }
+*/
 
 
 

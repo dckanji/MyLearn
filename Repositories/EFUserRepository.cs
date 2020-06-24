@@ -60,12 +60,21 @@ namespace learn.Repositories
                     AsQueryable是在数据库中查询再返回数据
                     AsEnumerable()是延迟执行的，实际上什么都没有发生，当真正使用对象的时候.ToList()則立即执行
                     var userlist = _context.EFUsers.AsEnumerable().ToList();
+                    include 立即加载关联对象(table或欄位)..将需要的数据一次性取出，避免频繁的查询操作..
+                    會完整地載入關聯資料...應避免載入完整的關聯資料避免引響執行運算
+                    join 兩表不必含有外鍵關係，需要代碼手動指定連接外鍵相等（具有可拓展性，除了值相等，還能指定是>,
+                    <以及其他對兩表的相應鍵的關係），以及結果欄位。
+                    where 查詢條件
+                    OrderByDescending( s => s.UserId); //desc排序
+                    OrderBy //asc排序
+                    Contains 等价于SQL中的like语句..只针对于字符串（string）类型的数据..Contains等价于like '%key%' 
+                    EndsWith等价于like '%key' 确定此字符串实例的结尾是否与指定的字符串匹配
+                    StartsWith等价于like 'key%'  确定此字符串实例的开头是否与指定的字符串匹配
                 */
                 var userlist = _context.EFUsers.AsQueryable().ToList();
 
-                // _context.Set<Tables.PdSysMenu>() //設定一個結果集到dbset 中
+                    // _context.Set<Tables.PdSysMenu>() //設定一個結果集到dbset 中
                 //_mapper.Map<IEnumerable<PdSysMenuForSider>>(result); 設定在map中
-                //.OrderByDescending( s => s.UserId); //desc排序
 
                return (userlist.Any()) ? userlist : null; //若該物件有包含任何資料...則回傳userlist
         
