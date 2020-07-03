@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
+import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-myef-userupdate',
@@ -20,18 +21,29 @@ import { Observable } from 'rxjs';
       //宣告一個user類的物件陣列..接收父祖件的傳值
       @Input() userDetail: EFUser;
       @Input() runType: string;
-      
+
+      //private headers = new HttpHeaders({'Content-Type': 'application/json'})
+      private baseUrl = '/api/EFUser/';
+      age_value = '';
+      age_title = 'Input a number';
+
       //建立接收前端form的欄位資料
       form = this.fb.group({
-        userid: [null, Validators.required], 
-        username: [null, Validators.required],
-        userage: [null],
-        creationdate: [null],
-        deptno: [null]
+        userId: [null, Validators.required], 
+        userName: [null, Validators.required],
+        userAge: [this.age_value],
+        creationDate: [null],
+        deptNo: [null]
         //adv_fax: ['', Validators.pattern('[^A-Za-z]+$')],//使用正则表达式进行校验
       });
 
-      private baseUrl = '/api/EFUser/';
+
+
+      //从模板视图中获取匹配的元素..來自html的 #inputElement..
+      //ElementRef 物件是获取视图层的DOM(Document Object Model)元素..如:div/text..在浏览器中 native 元素就是 DOM 元素
+      //並且宣告為 inputElement 變數
+      @ViewChild('inputElement', { static: false }) inputElement?: ElementRef;
+
       private deptLists; 
       loading: boolean;
       saving: boolean;
@@ -59,7 +71,9 @@ import { Observable } from 'rxjs';
         console.log("id =  ");
       }
 
-        /**
+//**********************************表單 相關 function start******************************************* */
+
+       /**
        * 透過 heroService.getHeroes 獲取英雄列表資料
        */
       getdeptList(): void {
@@ -68,6 +82,94 @@ import { Observable } from 'rxjs';
           { name: '電腦部', code: 'pc' }
         ];
       }
+
+      /**日期選擇後觸發 */
+      dateOnChange(result: Date): void {
+        console.log('onChange: ', result);
+      }
+
+      /**年齡輸入後觸發 */
+      ageOnChange(value: string): void {
+        this.updateValue(value);
+      }
+
+      /**檢查輸入的文字是否為數字,若為數字才寫入 */
+      updateValue(value: string): void {
+        const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/; //正則表達式
+        if ((!isNaN(+value) && reg.test(value)) || value === '' || value === '-') {
+          this.age_value = value;
+        }
+        //將規整為數字的值回寫到該html dom value 元素中..需設定延遲秒數(0.5秒)否則太快會造成異常
+        setTimeout(()=> {
+          this.inputElement!.nativeElement.value = this.age_value;
+        },500)
+        //寫入到 [nzTooltipTitle] 组件
+        this.updateTitle();
+      }
+      
+      /**
+       * 依據數字格式寫入到[nzTooltipTitle] 组件
+       */
+      updateTitle(): void {
+        this.age_title = (this.age_value !== '-' ? this.formatNumber(this.age_value) : '-') || 'Input a number';
+      }
+
+      /**
+       * 數字格式的轉換
+       * @param value 
+       */
+      formatNumber(value: string): string {
+        const stringValue = `${value}`;
+        const list = stringValue.split('.');
+        const prefix = list[0].charAt(0) === '-' ? '-' : '';
+        let num = prefix ? list[0].slice(1) : list[0];
+        let result = '';
+        while (num.length > 3) {
+          result = `,${num.slice(-3)}${result}`;
+          num = num.slice(0, num.length - 3);
+        }
+        if (num) {
+          result = num + result;
+        }
+        return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
+      }
+
+        // '.' at the end or only '-' in the input box.
+        /**
+         * 失去焦點時執行..
+         * slice 文字擷取 array.slice(start,end) 参数start是截取的开始数组索引，end参数等于你要取得最后一个字符的位置+1
+         * charAt 返回字符串中的第幾个字符:
+         */
+      onBlur(): void {
+        if (this.age_value.charAt(this.age_value.length - 1) === '.' || this.age_value === '-') {
+          this.updateValue(this.age_value.slice(0, -1));
+        }
+        console.log('onBlur:'+this.age_value.slice(0, -1));
+      }
+
+//**********************************表單 相關 function end******************************************* */
+
+      test(){
+ 
+
+        let data = {
+          "USERid": this.form.controls['userId'], //取得來自form的資料
+          "userName": "kanji",
+          "userAge": 24,
+          "deptNo": "mis",
+          "creationDate": new Date()
+        }        
+        //const request = this.create(this.form.value); //傳入表單資料到controller
+        /*this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
+          console.log(data);
+        })
+        */
+        this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
+          console.log(data);
+        })
+
+      }
+
 
   /**
    * 存檔後更新資料庫
@@ -92,7 +194,18 @@ import { Observable } from 'rxjs';
         if (this.form.invalid) {
           return;
         }
-        const request = this.create(this.form.value); //傳入表單資料到controller
+
+        let data = {
+          "username": "zhangsan",
+          "password": "123"
+        }        
+
+        //const request = this.create(this.form.value); //傳入表單資料到controller
+        this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
+          console.log(data);
+        })
+      }
+/*
         this.saving = true;
         request.subscribe({
           error: () => {
@@ -106,12 +219,12 @@ import { Observable } from 'rxjs';
             this.form.markAsPristine();
           }
         });
-
+*/
 
         
         //return this.http.post<EFUser>(this.baseUrl, efuser);
 
-      }
+      
 /*
       this.modalService.confirm({
       nzTitle: '你確認要存檔嗎?',

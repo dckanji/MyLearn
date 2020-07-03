@@ -29,18 +29,37 @@ namespace learn.Controllers
 
         }
         
-        
-        /*HttpPost 方式寫入資料
+        [HttpPost("EFTestInsert")]
+        public ActionResult EFTestInsert([FromBody] EFUserForEdit data)
+        {
+            Console.WriteLine("EFTestInsert ***********"+data);
+            //var id = data.userId;
+            var str ="EFTestInsert OK";
+            //異步處理
+            //await 相当于传递状态机恢复的方法。await不是等待的意思，而是在将来的某个时刻，方法恢复执行
+           // var efuser = await this.service.EFUserCreateAsync(data); //如果没有await那么async修饰的函数仍然是同步执行，失去意义
+            //return CreatedAtAction(str);  
+            //return CreatedAtAction(nameof(GetUserByIdAsync), new { id = user.Id }, user);
+            return Ok(str);         
+        }//end EFSave
+
+        /*
+        HttpPost 方式寫入資料
+        WebApi程序可在方法参数前加[FromBody]标识，表示该参数值应该从请求的Body中获取，而不是从URL中获取
+        当参数值过大时需要用[FromBody]参数进行传输
+         [FromBody] 参数不能是基本的数据类型(如byte、int、bool、DateTime、string等)
+         data傳入的格式若不同或不能轉換...則傳入的物件則會變為null...如111不能轉為日期
+         
        */
         [HttpPost("EFInsert")]
-        public async Task<ActionResult<EFUser>> EFInsert([FromBody] EFUser data)
+        public async Task<ActionResult<EFUserForEdit>> EFInsert([FromBody] EFUserForEdit data)
         {
             //Console.WriteLine("getEFTable ***********");
-            var id = data.UserId;
+            var id = data.userId;
 
             //異步處理
             //await 相当于传递状态机恢复的方法。await不是等待的意思，而是在将来的某个时刻，方法恢复执行
-            var efuser = await this.service.EFUserCreateAsync(data); //如果没有await那么async修饰的函数仍然是同步执行，失去意义
+           // var efuser = await this.service.EFUserCreateAsync(data); //如果没有await那么async修饰的函数仍然是同步执行，失去意义
             //return CreatedAtAction(str);  
             //return CreatedAtAction(nameof(GetUserByIdAsync), new { id = user.Id }, user);
             return Ok(data);         

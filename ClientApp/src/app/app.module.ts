@@ -63,6 +63,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/
 import { ToastrModule } from 'ngx-toastr'; /*提示框訊息组件*/
 import { NgZorroAntdModule } from 'ng-zorro-antd'; /* ngzorro 組件 */
 
+/*nz-date-picker 的部分 locale 来自于 Angular 自身的国际化支持，需要在 app.module.ts文件中 引入相应的 Angular 语言包。 */
+import zh from '@angular/common/locales/zh';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(zh);
+
 /*
  Angular 应用是模块化的，它拥有自己的模块化系统，称作 NgModule
  一个 NgModule 就是一个容器，用于存放一些内聚的代码块，

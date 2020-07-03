@@ -21,32 +21,54 @@
                         <!--antd 是以 24 等分的栅格来划分区域-->
                         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入員工編號">ID</nz-form-label>
                         <nz-form-control [nzSm]="10" [nzXs]="24">
-                            <input nz-input formControlName="userid">
+                            <input nz-input formControlName="userId">
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
                         <!--antd 是以 24 等分的栅格来划分区域-->
                         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入姓名">員工姓名</nz-form-label>
                         <nz-form-control [nzSm]="10" [nzXs]="24">
-                            <input nz-input formControlName="username">
+                            <input nz-input formControlName="userName">
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
                         <nz-form-label [nzSm]="6" [nzXs]="24" nzPlaceHolder="请輸入年齡">員工年齡</nz-form-label>
+                        
                         <nz-form-control [nzSm]="10" [nzXs]="24">
-                            <input nz-input formControlName="userage">
+                            <!--(ngModelChange) Angular 原生的事件..()表示事件..須配合[ngModel]
+                                => 输入字符时触发（不包含功能性按键， enter， control 等)
+                                 (blur) 失去焦點
+                                若要在form 中使用模板則需要宣告 [ngModelOptions]="{standalone: true}
+                            -->
+                            <input 
+                                 #inputElement 
+                                style="width: 120px"
+                                nz-input
+                                nz-tooltip
+                                nzTooltipTrigger="focus"
+                                nzTooltipPlacement="topLeft"
+                                nzOverlayClassName="numeric-input"
+                                [nzTooltipTitle]="age_title"
+                                [ngModel]="age_value" 
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="ageOnChange($event)" 
+                                (blur)="onBlur()">
+                                
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
                         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzPlaceHolder="请輸入到職日期" >到職日期</nz-form-label>
                         <nz-form-control [nzSm]="10" [nzXs]="24">
-                            <input nz-input formControlName="creationdate">
+                            <!--<input nz-input formControlName="creationDate">
+                                [(ngModel)]="creationdate" (ngModelChange)="dateOnChange($event)"
+                            -->
+                            <nz-date-picker formControlName="creationDate"></nz-date-picker>
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
                         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>所屬部門</nz-form-label>
                         <nz-form-control [nzSm]="10" [nzXs]="24">
-                            <nz-select (click)="getdeptList()" formControlName="deptno" id="deptno" 
+                            <nz-select (click)="getdeptList()" formControlName="deptNo" id="deptNo" 
                                 nzPlaceHolder="请选择部門" nzShowSearch>
                                 <nz-option *ngFor="let dept of deptLists" [nzLabel]="dept.name" [nzValue]="dept.code"></nz-option>
                             </nz-select>
@@ -68,6 +90,7 @@
                             儲存</button>
 
                           <button nz-button (click)="goBack()" >取消</button>
+                          <button nz-button (click)="test()" >Test</button>
                         </nz-form-control>
                     </nz-form-item>
 
