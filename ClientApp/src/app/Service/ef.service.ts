@@ -45,6 +45,8 @@ export class EfService {
      * 回傳 Observable 類型物件..透過 HttpClient.get 方法来获取英雄数据
      * Observable 是 RxJS 库中的一个关键类。
      * 呼叫方可透過 Observable.subscribe() 進行獲取
+     * pipe 使用类似于 链式调用 的方式来组合操作符
+     * 
     */
     CallEFWebApi(apiurl:string): Observable<any[]>{
 

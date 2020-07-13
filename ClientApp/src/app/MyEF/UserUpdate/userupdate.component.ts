@@ -6,9 +6,10 @@ import { Location } from '@angular/common';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';//nz 的訊息服務
 import { Observable } from 'rxjs';
 import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { isNullOrUndefined, isNumber } from 'util'; //使用“ TypeScript 定义”文件管理器
 
 @Component({
     selector: 'app-myef-userupdate',
@@ -31,7 +32,7 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
       form = this.fb.group({
         userId: [null, Validators.required], 
         userName: [null, Validators.required],
-        userAge: [this.age_value],
+        userAge: [null],
         creationDate: [null],
         deptNo: [null]
         //adv_fax: ['', Validators.pattern('[^A-Za-z]+$')],//使用正则表达式进行校验
@@ -53,7 +54,7 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
         private efService: EfService,
         private http: HttpClient,
         private fb: FormBuilder,
-        private messageService: NzMessageService
+        private nzmessageService: NzMessageService
         ) 
         {} 
 /*
@@ -96,9 +97,18 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
       /**檢查輸入的文字是否為數字,若為數字才寫入 */
       updateValue(value: string): void {
         const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/; //正則表達式
+        /**
+         *  isNaN() 函数用于检查其参数是否為數字值..若為數字則傳回true
+         *  reg.test 该值指示搜索的字符串中是否存在..用正則表達式數字格式定義
+         *  === 用来检测两个操作数是否严格相等
+         */
         if ((!isNaN(+value) && reg.test(value)) || value === '' || value === '-') {
           this.age_value = value;
+          //將年齡設定到form中的userAge欄位參數
+          //this.form.controls['userAge'].setValue(this.age_value);
         }
+        
+
         //將規整為數字的值回寫到該html dom value 元素中..需設定延遲秒數(0.5秒)否則太快會造成異常
         setTimeout(()=> {
           this.inputElement!.nativeElement.value = this.age_value;
@@ -149,83 +159,138 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
 //**********************************表單 相關 function end******************************************* */
 
-      test(){
- 
+//**********************************按鈕 相關 function start******************************************* */
 
-        let data = {
-          "USERid": this.form.controls['userId'], //取得來自form的資料
-          "userName": "kanji",
-          "userAge": 24,
-          "deptNo": "mis",
-          "creationDate": new Date()
-        }        
-        //const request = this.create(this.form.value); //傳入表單資料到controller
-        /*this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
-          console.log(data);
-        })
-        */
-        this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
-          console.log(data);
-        })
+      /**
+       * 存檔按鈕
+       */
+      save(runType: string){
 
+          //設定連接的api路徑
+          this.baseUrl = '/api/EFUser/'+runType;
+          
+          if (runType == 'EFInsert'){
+            //若為未輸入無效則跳回
+            if (this.form.invalid) {
+              return;
+            }
+
+           //設定年齡的值到form變數中...若為空則可寫入預設年齡
+            this.form.controls['userAge'].setValue( isNumber(this.age_value) ? this.age_value : '0' );   
+
+            const request = this.create(this.form.value); //傳入表單資料到遠端api
+            this.saving = true;//狀態為存檔中
+            request.subscribe( 
+              { 
+                //(訂閱或監聽)異步取得http回傳的資訊
+                  error: () => {
+                    this.saving = false;//完成存檔
+                    this.nzmessageService.create('error', '儲存失敗');
+                    console.log("erro:儲存失敗");
+                  },
+                  complete: () => {
+                    this.saving = false;//完成存檔
+                    this.nzmessageService.create('success', '儲存成功');
+                    this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+                  }
+              });
+
+          }//end runType = 'EFInsert'
+          else if(runType == 'EFUpdate'){
+
+              //若id沒資料則返回
+              if (isNullOrUndefined(this.userDetail.userId)) {
+                console.log("userDetail:"+this.userDetail.userId);
+                return;
+  
+              }
+              
+              //設定連接路徑
+              this.baseUrl = '/api/EFUser/'+runType;
+
+              const request = this.update(this.userDetail.userId, this.userDetail); //傳入表單資料到遠端api
+              this.saving = true;//狀態為存檔中
+              request.subscribe({ //(訂閱或監聽)異步取得http回傳的資訊
+                error: () => {
+                  this.saving = false;//完成存檔
+                  this.nzmessageService.create('error', '儲存失敗');
+                  console.log("erro:儲存失敗");
+                },
+                complete: () => {
+                  this.saving = false;//完成存檔
+                  this.nzmessageService.create('success', '儲存成功');
+                  console.log("success:儲存成功");
+                  this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+                }
+              });
+
+
+          }//end runType = 'EFUpdate'
+      }// end save
+
+      /**
+       * 回上一層
+       */
+      goBack(): void {
+        this.location.back();
       }
 
+
+      //**********************************按鈕 相關 function end ******************************************* */
+
+
+  
+//********************************** 呼叫遠端api start ******************************************* */
+  /**新增建立資料 
+   * @param data 新增的資料
+  */
+  create(data: EFUser): Observable<EFUser> {
+    return this.http.post<EFUser>(this.baseUrl, data);
+  }
 
   /**
-   * 存檔後更新資料庫
+   * 更新資料 
+   * @param id 主鍵
+   * @param data 異動的資料
+  */
+  update(id: number, data: EFUser) {
+    return this.http.put<EFUser>(`${this.baseUrl}/${id}`, data);
+  }
+
+  /**
+   * 刪除資料
+   * @param id 主鍵
    */
-  save(runType: string){
+  delete(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+//********************************** 呼叫遠端api end******************************************* */
 
 
-/** 表單元素的操作
-  //取值 username 為from上面的名稱
-  this.proposalContract.advertiserId = this.advForm.get("username").value
-  //设值
-  this.advForm.get("disAdvertiser").setValue(this.advCon.company_name);
-  //设为可编辑/可用
-  this.advForm.get("selAdvertiser").enable();
-  //设为不可编辑/可用
-  this.advForm.get("selAdvertiser").disable();
- */
-      this.baseUrl = '/api/EFUser/'+runType;
-      
-      if (runType = 'EFInsert'){
-        //若為未輸入無效則跳回
-        if (this.form.invalid) {
-          return;
-        }
 
-        let data = {
-          "username": "zhangsan",
-          "password": "123"
-        }        
+test(){
 
-        //const request = this.create(this.form.value); //傳入表單資料到controller
-        this.http.post('/api/EFUser/EFTestInsert', data).subscribe(data => {
-          console.log(data);
-        })
-      }
-/*
-        this.saving = true;
-        request.subscribe({
-          error: () => {
-            this.saving = false;
-            this.messageService.create('error', '儲存失敗');
-            console.log("erro:儲存失敗");
-          },
-          complete: () => {
-            this.saving = false;
-            this.messageService.create('success', '儲存成功');
-            this.form.markAsPristine();
-          }
-        });
-*/
+  //this.age_value = (isNaN(+this.age_value)? '0' : this.age_value);
+  console.log("userDetail="+ this.userDetail.userId);
+
+  //  console.log("form.userAge2="+this.form.controls['userAge'].value );
+  //物件陣列
+  var tempdata = {
+    "userId" : '111',
+    "username" : '222',
+    "userage" : '11',
+    "deptno" : 'mis',
+    "creationDate" : new Date()
+  }
+  
+  this.http.put<EFUser>('/api/EFUser/EFMyTest/'+this.userDetail.userId,this.userDetail).subscribe(data => {
+    console.log(data.toString());
+  })
+
 
         
-        //return this.http.post<EFUser>(this.baseUrl, efuser);
-
-      
-/*
+/*    //另一種訊息提示
       this.modalService.confirm({
       nzTitle: '你確認要存檔嗎?',
       //nzContent: '<b style="color: red;">Some descriptions</b>',
@@ -237,32 +302,9 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
       nzCancelText: 'No',
       nzOnCancel: () => console.log('Cancel')
     });
-    */
+*/
 
-  }// end save
-
-  /**新增建立資料 */
-  create(data: EFUser): Observable<EFUser> {
-    return this.http.post<EFUser>(this.baseUrl, data);
-  }
-
-  update(id: number, data: EFUser) {
-    return this.http.put<EFUser>(`${this.baseUrl}/${id}`, data);
-  }
-
-  delete(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
-
-
-  /**
-   * 回上一層
-   */
-  goBack(): void {
-
-    this.location.back();
-  }
-
+}//end test
 
 
 

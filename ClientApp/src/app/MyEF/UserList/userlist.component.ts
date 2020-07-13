@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ChangeDetectorRef} from '@angular/core'; /*引入 angular 核心*/ 
-import { ToolService } from '../../Service/tools.service';
+import { Component, OnInit} from '@angular/core'; /*引入 angular 核心*/ 
 import { EfService } from '../../Service/ef.service';
-import { ActivatedRoute, Router} from '@angular/router';
 import { EFUser} from '../../Models/EFUser';//引入angular類別組件
-import { UserTest } from '../../Models/UserTest';//引入angular類別組件
-
+import { NzMessageService } from 'ng-zorro-antd';//nz 的訊息服務
 import { Location } from '@angular/common';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';//nz對話框類
 import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateDialog.component';/**測試組件-EF框架.. */
-
 
 @Component({
     selector: 'app-myef-userlist',
@@ -27,12 +23,10 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
 
       //构造函数-載入通用服務  
       constructor(private http: HttpClient, 
-        private toolService: ToolService, 
         private efService: EfService,
-        private activerouter: ActivatedRoute, //ActivatedRoute 保存着到这个 HeroDetailComponent 实例的路由信息
-        private router: Router,
         private location: Location,
-        private modalService: NzModalService) { 
+        private modalService: NzModalService,
+        private nzmessageService: NzMessageService) { 
         
       } 
         
@@ -49,19 +43,17 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
         this.efService.CallEFWebApi(apiurl).subscribe(data =>{
           this.userList = data
         
-        //
-        /*
-        this.http.get<EFUser[]>('/api/EFUser/getEFUserList').subscribe(data => {
-          this.userList = data;
-        });//end http
-              let distStr = 'ef_userlist';
+        /* 資料轉向
+        let distStr = 'ef_userlist';
         const _ef_testLet = { ef_testLet: [distStr] }; //後續可定義在一個通用常數類中...因此後續可以集中管理
         this.router.navigate([{outlets: _ef_testLet}]);
-
         */
         });//end http
       }//getUserList END
 
+      /**
+       * 重新列表 
+       */
       public reLoad(): void {
         this.location.back();
         //clearInterval(this.interval);
@@ -78,14 +70,14 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
 
         this.efService.CallEFWebApi(apiurl).subscribe(data =>
               this.userList = data
-             /* for (let efuser of this.userList) {
+             /* for 迴圈方式
+             for (let efuser of this.userList) {
                 console.log("EFUSER name="+efuser.useR_NAME); // 1, "string", false
                 console.log("EFUSER TEST ="+efuser.usertest); // 1, "string", false
               }
               */
         );
       }//getTableData END
-
 
 
       /**
@@ -99,8 +91,58 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
       }
 
 
+      /**
+       * 載入更新資料組件-傳送執行類型EFUpdate
+       */
+      getUpdateComponent(user: EFUser): void{
+        this.selectedUser = user;
+        this.runType = 'EFUpdate';
+        //this.router.navigate([{outlets: { ef_testLet: ['ef_update'] }}]);
+      }
 
       /**
+       * 載入更新資料組件-傳送執行類型EFInser
+       */
+      getAddComponent(): void{
+        this.runType = 'EFInsert';
+        //this.router.navigate([{outlets: { ef_testLet: ['ef_update'] }}]);
+      }
+
+      /**
+       * 刪除 -呼叫後端api進行資料刪除
+       */
+      delete(user: EFUser){
+        this.selectedUser = user;
+
+        //刪除的提示訊息 
+        this.modalService.confirm({ 
+          nzTitle: '你確認要刪除嗎?',
+          nzContent: '<b >'+this.selectedUser.userName+'</b>',
+          nzOkType: 'danger',
+          nzOkText: 'Yes',
+          nzOnOk: () => this.http.delete('/api/EFUser/EFDelete/'+this.selectedUser.userId).subscribe({
+            error: () => {
+              //this.saving = false;//完成存檔
+              this.nzmessageService.create('error', '儲存失敗');
+              console.log("erro:儲存失敗");
+            },
+            complete: () => {
+              //this.saving = false;//完成存檔
+              this.nzmessageService.create('success', '儲存成功');
+              console.log("success:儲存成功");
+              //this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+            }
+        
+           }),
+          nzCancelText: 'No',
+          nzOnCancel: () => console.log('Cancel')
+        });
+    
+      }
+
+
+
+     /**
          * Dialog 方式載入組件進行修改資料
          * 該組件必須先宣告在module中,且進行啟動(entry)..否則將出現異常
          * entryComponents: [MyEF_UserUpdate_Component]
@@ -135,45 +177,6 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
           //Return a result when closed
           //modalref.afterClose.subscribe(result => console.log('[afterClose] The result is:', result));
       }
-
-      /**
-       * 載入更新資料組件
-       */
-      getUpdateComponent(user: EFUser): void{
-        this.selectedUser = user;
-        this.runType = 'EFUpdate';
-        //this.router.navigate([{outlets: { ef_testLet: ['ef_update'] }}]);
-      }
-
-      /**
-       * 載入更新資料組件
-       */
-      getAddComponent(): void{
-        this.runType = 'EFInsert';
-        //this.router.navigate([{outlets: { ef_testLet: ['ef_update'] }}]);
-      }
-
-      /**
-       * 刪除資料
-       * 呼叫後端api進行相關資料的刪除
-       */
-      delete(user: EFUser){
-        this.selectedUser = user;
-        /** */
-        this.modalService.confirm({
-          nzTitle: '你確認要刪除嗎?',
-          nzContent: '<b style="color: red;">'+this.selectedUser.userName+'</b>',
-          nzOkType: 'danger',
-          nzOkText: 'Yes',
-          nzOnOk: () => this.http.get<any>('/api/EFUser/EFDel').subscribe(data => {
-                        console.log('data:'+data)
-                      }),
-          nzCancelText: 'No',
-          nzOnCancel: () => console.log('Cancel')
-        });
-    
-      }
-
 
 
 

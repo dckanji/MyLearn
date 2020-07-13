@@ -21,11 +21,15 @@ namespace learn.Models
 
         public string userName { get; set; }
 
-        public int userAge { get; set; }
+        public Nullable<int> userAge { get; set; }
 
         public string deptNo { get; set; }
 
-        public DateTime creationDate { get; set; }
+         /**
+         * 設定日期...故最好是文字傳文字..因文字可以傳入空值...否則就必須有日期傳入
+         * 或者設定成此變數可以接受null 的日期格式 Nullable<T>
+         */
+        public Nullable<DateTime> creationDate { get; set; }
         
 
     }
