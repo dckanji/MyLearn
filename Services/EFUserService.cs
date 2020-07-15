@@ -58,6 +58,14 @@ namespace learn.Services
             return  this.repo.EFGetEFUserToList();
         }
 
+        /**
+        取得EFUser資料列表..回傳List<EFUser>
+        */
+        public List<EFUser> GetEFUserToListById(int id)
+        {
+            return  this.repo.EFGetEFUserToListById(id);
+        }
+
 
         /**
         寫入資料..回傳資料庫異動狀態
@@ -72,24 +80,52 @@ namespace learn.Services
         建立使用者
         async方法只可以返回void，Task和Task<T>
         */
-        public async Task<EFUser> EFUserCreateAsync(EFUser efuser)
+        public async Task<EFUserForEdit> EFUserInsertAsync(EFUserForEdit efuser)
         {
 
             //檢查帳號是否存在
 
             //若不存在則建立帳號
+            var result = await this.repo.EFUserInsertAsync(efuser);
+
             //取得id
             //var efuser1 =  await "test";
-            
            /* var user = context.HttpContext.User;
             var creatorId =  (await userManager.GetUserAsync(user)).Id
-
 var id = (int)result.GetType().GetProperty("Id").GetValue(result, null);
 */
            // return CreatedAtAction(nameof(GetById), new { id }, result);
 
-            return efuser;
+            return result;
         }
+
+
+
+        /**
+        更新使用者
+        async方法只可以返回void，Task和Task<T>
+        */
+        public async Task<EFUserForEdit> EFUserUpdateAsync(EFUserForEdit efuser)
+        {
+
+            //若不存在則建立帳號
+            var result = await this.repo.EFUserUpdateAsync(efuser);
+            return result;
+        }
+
+
+        /*
+        刪除使用者
+        */
+        public string EFUserDelete(int id)
+        {
+            //刪除資料
+            var result = this.repo.EFUserDelete(id);
+            return result;
+        }
+
+
+
 
 
         /**

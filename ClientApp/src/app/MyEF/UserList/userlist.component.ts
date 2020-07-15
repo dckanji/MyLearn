@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit} from '@angular/core'; /*引入 angular 核心*/ 
+import { Component, OnInit, ErrorHandler} from '@angular/core'; /*引入 angular 核心*/ 
 import { EfService } from '../../Service/ef.service';
 import { EFUser} from '../../Models/EFUser';//引入angular類別組件
 import { NzMessageService } from 'ng-zorro-antd';//nz 的訊息服務
 import { Location } from '@angular/common';
 import { NzModalService } from 'ng-zorro-antd/modal';//nz對話框類
 import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateDialog.component';/**測試組件-EF框架.. */
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'app-myef-userlist',
@@ -50,6 +51,27 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
         */
         });//end http
       }//getUserList END
+
+      /**
+       * 獲取EFUser 的列表資料
+       */
+      public getUserListById(): void {
+        let apiurl = '/api/EFUser/getEFUserList/';
+
+        var id = 555;
+
+        this.efService.CallEFWebApi(apiurl+id).subscribe(data =>{
+          this.userList = data
+        
+        /* 資料轉向
+        let distStr = 'ef_userlist';
+        const _ef_testLet = { ef_testLet: [distStr] }; //後續可定義在一個通用常數類中...因此後續可以集中管理
+        this.router.navigate([{outlets: _ef_testLet}]);
+        */
+        });//end http
+      }//getUserList END
+
+
 
       /**
        * 重新列表 
@@ -120,20 +142,20 @@ import { MyEF_UserUpdateDialog_Component } from '../UserDetailDialog/userupdateD
           nzContent: '<b >'+this.selectedUser.userName+'</b>',
           nzOkType: 'danger',
           nzOkText: 'Yes',
-          nzOnOk: () => this.http.delete('/api/EFUser/EFDelete/'+this.selectedUser.userId).subscribe({
-            error: () => {
-              //this.saving = false;//完成存檔
-              this.nzmessageService.create('error', '儲存失敗');
-              console.log("erro:儲存失敗");
+          nzOnOk: () => 
+          this.http.delete<string>('/api/EFUser/EFDelete/'+this.selectedUser.userId).subscribe({
+            error: (error) => {
+              this.nzmessageService.create('error', '儲存失敗'+error.error.error.message);
+              console.error(error);
+              console.log("erro:儲存失敗"+error.message);
             },
             complete: () => {
-              //this.saving = false;//完成存檔
               this.nzmessageService.create('success', '儲存成功');
               console.log("success:儲存成功");
-              //this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+              this.reLoad();
             }
-        
-           }),
+          }),
+           
           nzCancelText: 'No',
           nzOnCancel: () => console.log('Cancel')
         });

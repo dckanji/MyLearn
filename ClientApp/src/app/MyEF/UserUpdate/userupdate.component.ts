@@ -183,15 +183,17 @@ import { isNullOrUndefined, isNumber } from 'util'; //使用“ TypeScript 定�
             request.subscribe( 
               { 
                 //(訂閱或監聽)異步取得http回傳的資訊
-                  error: () => {
+                  error: (error) => {
                     this.saving = false;//完成存檔
                     this.nzmessageService.create('error', '儲存失敗');
+                    console.error(error);
                     console.log("erro:儲存失敗");
                   },
                   complete: () => {
                     this.saving = false;//完成存檔
                     this.nzmessageService.create('success', '儲存成功');
                     this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+                    this.goBack(); //回主畫面進行列表
                   }
               });
 
@@ -211,9 +213,10 @@ import { isNullOrUndefined, isNumber } from 'util'; //使用“ TypeScript 定�
               const request = this.update(this.userDetail.userId, this.userDetail); //傳入表單資料到遠端api
               this.saving = true;//狀態為存檔中
               request.subscribe({ //(訂閱或監聽)異步取得http回傳的資訊
-                error: () => {
+                error: (error) => {
                   this.saving = false;//完成存檔
                   this.nzmessageService.create('error', '儲存失敗');
+                  console.error(error);
                   console.log("erro:儲存失敗");
                 },
                 complete: () => {
@@ -221,6 +224,7 @@ import { isNullOrUndefined, isNumber } from 'util'; //使用“ TypeScript 定�
                   this.nzmessageService.create('success', '儲存成功');
                   console.log("success:儲存成功");
                   this.form.markAsPristine();//markAsPristine()是将表单控件值标记为未改变，这个方法主要用在表单重置时
+                  this.goBack(); //回主畫面進行列表
                 }
               });
 

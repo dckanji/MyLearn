@@ -5,6 +5,8 @@ using learn.EFDB;
 using learn.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
 /*
 此檔案主要是針對EFUSER TABLE進行各項功能(新增/刪除/修改/查詢等)或抓取的設定..
 相當於對該TABLE的控制類
@@ -53,7 +55,7 @@ namespace learn.Repositories
             try{
                 //取得數量
                 var cnt = _context.EFUsers.Count();
-                //查詢user id 返回list
+                //查詢 UserId 欄位..不加上條件 返回list
                 var userno = _context.EFUsers.Select( s => s.UserId.ToString()).ToList();
                 
                 /*  AsEnumerable是从数据库读取全部数据再在程序中查询 
@@ -71,7 +73,7 @@ namespace learn.Repositories
                     EndsWith等价于like '%key' 确定此字符串实例的结尾是否与指定的字符串匹配
                     StartsWith等价于like 'key%'  确定此字符串实例的开头是否与指定的字符串匹配
                 */
-                var userlist = _context.EFUsers.AsQueryable().ToList();
+                var userlist = _context.EFUsers.OrderBy( s => s.UserId).AsQueryable().ToList();
 
                     // _context.Set<Tables.PdSysMenu>() //設定一個結果集到dbset 中
                 //_mapper.Map<IEnumerable<PdSysMenuForSider>>(result); 設定在map中
@@ -83,6 +85,92 @@ namespace learn.Repositories
                 return null;
             }
         }
+
+        /*
+        依照傳入的id取得單一使用者列表
+        使用Linq查询数据时....傳回List
+        */
+        public List<EFUser> EFGetEFUserToListById(int id){
+            
+            try{
+                //取得數量
+                var cnt = _context.EFUsers.Count();
+
+                //依照 user id欄位加上條件 等於傳入的id  返回list
+                var userlist = _context.EFUsers.Where(r => r.UserId == id).ToList();
+
+Console.WriteLine( "testuser-*******************************************************");
+                //以EFUser作table進行查詢
+                var testuser = this._context.Set<EFUser>()
+                    .Where(r => r.UserId == id) //查詢條件比對_efuser.UserId
+                    .Select(r => new EFUserForEdit(){ //將查詢出的 EFUser 資料寫入到EFUserForEdit 物件中
+                        userId = r.UserId,
+                        userName = r.UserName,
+                        userAge = r.UserAge,
+                        creationDate = r.CreationDate,
+                        deptNo = r.DeptNo
+                    });
+                
+                //將資料集進行解開..oracle 12c 可使用 SingleOrDefault 等相關語法直接獲取資料
+                foreach (EFUserForEdit str in testuser){
+                    Console.WriteLine(str.userId);
+                    Console.WriteLine(str.userName);
+                }
+                //Console.WriteLine( "testuser-"+testuser.userId);
+
+                //相當執行 select count(*) from <table>
+                Console.WriteLine( "testuser-"+testuser.Count());
+
+Console.WriteLine( "testuser-*******************************************************");
+ /*
+                var userlist = _context.Set<EFUser>()
+                    .Where(r => r.UserId == id)
+                    .Select( s => new 
+                     s.UserId.ToString(),
+                     s.UserName.ToString()
+                    
+                    )
+                    ;
+                 //查詢更新後的結果..進行回傳IQueryable<EFUser>
+                var result_efuser = this._context.Set<EFUser>()
+                    .Where(r => r.UserId == 555) //查詢條件比對_efuser.UserId
+                    .Select(r => new EFUserForEdit(){
+                        userId = r.UserId,
+                        userName = r.UserName,
+                        userAge = r.UserAge,
+                        creationDate = r.CreationDate,
+                        deptNo = r.DeptNo
+                    }).AsQueryable();
+                    
+                    //.FirstOrDefault();//返回序列中的第一条记录，如果没有记录，则返回默认值。..此功能只存在12C
+
+
+                //資料庫欄位格式 轉換成 新增資料欄位..進行回傳結果
+                var result = new EFUserForEdit
+                {
+                    userId = _efuser.UserId,
+                    userName = _efuser.UserName,
+                    userAge = _efuser.UserAge,
+                    creationDate = _efuser.CreationDate,
+                    deptNo = _efuser.DeptNo
+                };
+                _context.EFUsers
+                    .where(r => r.UserId == id).
+                OrderBy( s => s.UserId).AsQueryable().ToList();
+*/
+                // _context.Set<Tables.PdSysMenu>() //設定一個結果集到dbset 中
+                //_mapper.Map<IEnumerable<PdSysMenuForSider>>(result); 設定在map中
+
+               return (userlist.Any()) ? userlist : null; //若該物件有包含任何資料...則回傳userlist
+        
+            }
+            catch{
+                return null;
+            }
+        } 
+
+
+
 
         /*
         取得使用者列表
@@ -99,6 +187,40 @@ namespace learn.Repositories
                 return null;
             }
         }
+
+        /**
+        新增寫入EFUSER資料
+        */
+        public Task<EFUserForEdit> EFUserInsertAsync(EFUserForEdit efuser){
+
+            // 同步機制傳回方式...若無此部分則會出現異常 無法將類型 'learn.Models.EFUserForEdit' 
+            // 隱含轉換成 'System.Threading.Tasks.Task<learn.Models.EFUserForEdit>
+            return Task<EFUserForEdit>.Run(() =>
+            {
+                //新增資料欄位 轉換成 資料庫欄位格式
+                var _efuser = new EFUser()
+                {
+                    UserId = efuser.userId,
+                    UserName = efuser.userName,
+                    UserAge = efuser.userAge,
+                    CreationDate = efuser.creationDate,
+                    DeptNo = efuser.deptNo
+                };
+                this._context.Add(_efuser);
+                this._context.SaveChanges();
+
+                //資料庫欄位格式 轉換成 新增資料欄位..進行回傳結果
+                var result = new EFUserForEdit
+                {
+                    userId = _efuser.UserId,
+                    userName = _efuser.UserName,
+                    userAge = _efuser.UserAge,
+                    creationDate = _efuser.CreationDate,
+                    deptNo = _efuser.DeptNo
+                };
+                return result;
+            }); //end return Task
+        } //  EFUserInsertAsync
 
 
         /**
@@ -128,6 +250,79 @@ namespace learn.Repositories
             return "EFInsertEFUser OK";
         }
 
+
+        /**
+        刪除EFUSER資料
+        */
+        public string EFUserDelete(int id){
+
+            var status = "N";
+            //若ID > 0 則進行刪除
+            if (id != 0){
+                EFUser _efuser = new EFUser() //依照pk建立物件...以便刪除相應主鍵的資料
+                    {
+                    UserId =  id 
+                    };
+                this._context.Remove(_efuser);
+                this._context.SaveChanges(); 
+                status = "Y";//表示已刪除
+            }
+            return status;
+        }
+
+        /**
+        更新EFUSER資料
+        */
+        public Task<EFUserForEdit> EFUserUpdateAsync(EFUserForEdit efuser){
+
+            // 同步機制傳回方式...若無此部分則會出現異常 無法將類型 'learn.Models.EFUserForEdit' 
+            // 隱含轉換成 'System.Threading.Tasks.Task<learn.Models.EFUserForEdit>
+            return Task<EFUserForEdit>.Run(() =>
+            {
+                //更新的資料欄位 轉換成 資料庫欄位格式
+                var _efuser = new EFUser()
+                {
+                    UserId = efuser.userId,
+                    UserName = efuser.userName,
+                    UserAge = efuser.userAge,
+                    CreationDate = efuser.creationDate,
+                    DeptNo = efuser.deptNo
+                };
+                //將對應後的資料庫欄位放入ef容器中..並逐一針對所有欄位設定
+                //因為若不寫則更新時會變為null
+                this._context.Entry(_efuser).Property(r => r.UserName).IsModified = true;
+                this._context.Entry(_efuser).Property(r => r.UserAge).IsModified = true;
+                this._context.Entry(_efuser).Property(r => r.CreationDate).IsModified = true;
+                this._context.Entry(_efuser).Property(r => r.DeptNo).IsModified = true;
+                this._context.SaveChanges();
+
+
+                //查詢更新後的結果..進行回傳IQueryable<EFUser>
+                /*var result_efuser = this._context.Set<EFUser>()
+                    .Where(r => r.UserId == 555) //查詢條件比對_efuser.UserId
+                    .Select(r => new EFUserForEdit(){
+                        userId = r.UserId,
+                        userName = r.UserName,
+                        userAge = r.UserAge,
+                        creationDate = r.CreationDate,
+                        deptNo = r.DeptNo
+                    }).AsQueryable();
+                    */
+                    //.FirstOrDefault();//返回序列中的第一条记录，如果没有记录，则返回默认值。..此功能只存在12C
+
+
+                //資料庫欄位格式 轉換成 新增資料欄位..進行回傳結果
+                var result = new EFUserForEdit
+                {
+                    userId = _efuser.UserId,
+                    userName = _efuser.UserName,
+                    userAge = _efuser.UserAge,
+                    creationDate = _efuser.CreationDate,
+                    deptNo = _efuser.DeptNo
+                };
+                return result;
+            }); //end return Task
+        }
 
 
 //******************************* TEST SPACE START ************************

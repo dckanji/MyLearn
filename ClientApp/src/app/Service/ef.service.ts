@@ -80,10 +80,17 @@ export class EfService {
                
     }
 
+    CallEFDelWebApi(apiurl:string): Observable<any[]>{
 
+      return this.http.delete<any[]>(apiurl).pipe(
+        tap(_ => console.log('CALL CallEDelWebApi ')),  // RxJS 的 tap() 操作符来实现-该操作符会查看 Observable 中的值，使用那些值做一些事情，并且把它们传出来
+        catchError(this.handleError<any>('CallEFDelWebApi-'+apiurl)) //RxJS 的 catchError() 異常處理
+        //操作符会拦截失败的 Observable。 它把错误对象传给错误处理器，错误处理器会处理这个错误。
+    );
+}
 
   /**
-   * 在控制台(console)报告这个错误，并返回一个无害的结果（安全值），以便应用能正常工作
+   * 主要在控制台(console)报告这个错误，并返回一个无害的结果（安全值），以便应用能正常工作
    *  handleError() 方法会报告这个错误，并返回一个无害的结果（安全值），以便应用能正常工作
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result

@@ -18,13 +18,13 @@ namespace learn.Models
         public string UserName { get; set; }
 
         [Column("USER_AGE")]
-        public int UserAge { get; set; }
+        public Nullable<int> UserAge { get; set; }
 
         [Column("DEPT_NO")]
         public string DeptNo { get; set; }
 
         [Column("CREATION_DATE")]
-        public DateTime CreationDate { get; set; }
+        public Nullable<DateTime> CreationDate { get; set; }
         
         [ForeignKey("DeptNo")] //透過此外鍵變數傳遞
         [InverseProperty("EFDept_FK_EFUser")]//部門類下的外鍵...設定關聯到此類
