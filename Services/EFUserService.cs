@@ -24,7 +24,7 @@ namespace learn.Services
         }
 
 
-
+//************************** 查詢資料 start *************************************
 
         /**
         傳入sql語法取得 Datatable物件資料
@@ -66,13 +66,14 @@ namespace learn.Services
             return  this.repo.EFGetEFUserToListById(id);
         }
 
+//************************** 查詢資料 END *************************************
 
+//************************** 新增/刪除/修改 資料 start *************************************
         /**
         寫入資料..回傳資料庫異動狀態
         */
         public string EFUserInsert(EFUser efuser)
         {
-
             return  "ok";
         }
 
@@ -125,7 +126,7 @@ var id = (int)result.GetType().GetProperty("Id").GetValue(result, null);
         }
 
 
-
+//************************** 新增/刪除/修改 資料 END *************************************
 
 
         /**

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using learn.EFDB;
 using System;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace learn
 {
@@ -33,6 +34,12 @@ namespace learn
                 configuration.RootPath = "ClientApp/dist";
             });
             
+            //註冊AutoMapping....AutoMapper会从程序集中搜索Profile的子类，如:MappingProfiles ..然后把这些子类加入到配置中
+            //services.AddAutoMapper();   //<--舊版本的使用方式
+            services.AddAutoMapper(typeof(Startup));   //<-- 新版本的AutoMapper请使用这种方式添加服务
+
+
+
             //使用UserSecrets設定連接字串
             //services.AddTransient<TestSecretRepository>();
             services.AddDbContext<UserSecretDbContext>(options => 
